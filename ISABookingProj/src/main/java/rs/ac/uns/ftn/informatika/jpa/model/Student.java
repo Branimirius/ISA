@@ -57,16 +57,16 @@ public class Student {
 	/*
 	 * Kolona moze imati ime koje se razlikuje od naziva atributa.
 	 */
-	@Column(name = "indexNumber", unique = true, nullable = false)
+	@Column(name = "index_number", unique = true, nullable = false)
 	private String index;
 
 	/*
 	 * Anotacija @Column oznacava da ce neki atribut biti kolona u tabeli
 	 */
-	@Column(name = "firstName", nullable = false)
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
 
-	@Column(name = "lastName", nullable = false)
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
 
 	/*

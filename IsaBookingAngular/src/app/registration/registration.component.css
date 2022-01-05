@@ -7,6 +7,10 @@ mat-toolbar span{
     flex: 1 1 auto;
   }
 
+.center {
+text-align: center;
+}
+
 mat-toolbar a{
     text-decoration-color: aliceblue;
     color: aliceblue;
@@ -15,6 +19,6 @@ mat-toolbar a{
 mat-toolbar div{
    color: black;
 }
-mat-tab-group {
+.mat-tab-labels {
     justify-content: center;
 }

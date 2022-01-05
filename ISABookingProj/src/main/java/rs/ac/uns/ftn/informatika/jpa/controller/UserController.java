@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.UserDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.User;
 import rs.ac.uns.ftn.informatika.jpa.service.UserService;
 
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(value = "api")
 public class UserController {
@@ -39,26 +42,42 @@ public class UserController {
 	}
 	
 	//save user
-	@PostMapping(value = "/users")
-	public User createUser(@RequestBody User user) {
-		return this.userService.save(user);
+	
+	@PostMapping(value = "/users", consumes = "application/json")
+	public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
+
+		User user = new User();
+		user.setAdress(userDTO.getAdress());
+		user.setCity(userDTO.getCity());
+		user.setCountry(userDTO.getCountry());
+		user.seteMail(userDTO.geteMail());
+		user.setFirstName(userDTO.getFirstName());
+		user.setLastName(userDTO.getLastName());
+		user.setPassword(userDTO.getPassword());
+		user.setPhone(userDTO.getPhoneNumber());
+		user.setRegType(userDTO.getRegType());
+		user = userService.save(user);
+		return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
 	}
 	
 	//update user
-	@PutMapping(value = "/users/{id}")
-	public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long userId, @RequestBody User userDetails) {
-		User user = userService.findOne(userId);
-		user.setAdress(userDetails.getAdress());
-		user.setCity(userDetails.getCity());
-		user.setCountry(userDetails.getCountry());
-		user.seteMail(userDetails.geteMail());
-		user.setFirstName(userDetails.getFirstName());
-		user.setLastName(userDetails.getLastName());
-		user.setPassword(userDetails.getPassword());
-		user.setPhone(userDetails.getPhone());
-		//user = userDetails;
-		return ResponseEntity.ok(this.userService.save(user));
+	@PutMapping(value = "/users", consumes = "application/json")
+	public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
+		User user = userService.findOne(userDTO.getId());
+		user.setAdress(userDTO.getAdress());
+		user.setCity(userDTO.getCity());
+		user.setCountry(userDTO.getCountry());
+		user.seteMail(userDTO.geteMail());
+		user.setFirstName(userDTO.getFirstName());
+		user.setLastName(userDTO.getLastName());
+		user.setPassword(userDTO.getPassword());
+		user.setPhone(userDTO.getPhoneNumber());
+		user.setRegType(userDTO.getRegType());
+
+		user = userService.save(user);
+		return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
 	}
+	
 	//delete user
 	@DeleteMapping(value = "/users/{id}")
 	public Map<String, Boolean> deleteUser(@PathVariable(value = "id") long userId) {	
