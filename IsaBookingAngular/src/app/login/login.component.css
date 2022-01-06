@@ -1,0 +1,31 @@
+.landing{
+    display: block;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.img-landing{
+    display: block;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+}
+
+mat-toolbar span{
+    margin-left: 20px;
+    display: flex;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+mat-toolbar a{
+    text-decoration-color: aliceblue;
+    color: aliceblue;
+}
+
+mat-toolbar div{
+   color: rgb(0, 0, 0);
+}

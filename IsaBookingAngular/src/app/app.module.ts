@@ -19,6 +19,7 @@ import { MaterialModule } from './material/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { HttpClientModule} from '@angular/common/http';
     AppComponent,
     RegistrationComponent,
     NavigationComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

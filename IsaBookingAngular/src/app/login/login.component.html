@@ -1,0 +1,41 @@
+<mat-toolbar color="primary">
+    <span> 
+        <a routerLink='/home'> Home Page </a>
+    </span> 
+    <span class="registration"> 
+        <a routerLink='/registration'> Register </a>
+    </span> 
+    <span class="example-spacer"></span>
+    <span class="registration"> 
+        <button mat-raised-button>Log Out</button>
+    </span> 
+    <span class="registration"> 
+        <a routerLink='/login'> Log in </a>
+    </span>
+</mat-toolbar>
+<div class="example-container" >
+    <h2>Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div >
+            <label for="username">Username</label>
+            <input type="text" formControlName="username"  [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+            <div *ngIf="submitted && f.username.errors" >
+                <div *ngIf="f.username.errors.required">Username is required</div>
+            </div>
+        </div>
+        <div >
+            <label for="password">Password</label>
+            <input type="password" formControlName="password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            <div *ngIf="submitted && f.password.errors" >
+                <div *ngIf="f.password.errors.required">Password is required</div>
+            </div>
+        </div>
+        <div >
+            <button [disabled]="loading" >
+                <span *ngIf="loading" ></span>
+                Login
+            </button>
+            <a routerLink="/register" >Register</a>
+        </div>
+    </form>
+</div>
