@@ -1,41 +1,52 @@
-<mat-toolbar color="primary">
-    <span> 
-        <a routerLink='/home'> Home Page </a>
-    </span> 
-    <span class="registration"> 
-        <a routerLink='/registration'> Register </a>
-    </span> 
-    <span class="example-spacer"></span>
-    <span class="registration"> 
-        <button mat-raised-button>Log Out</button>
-    </span> 
-    <span class="registration"> 
-        <a routerLink='/login'> Log in </a>
-    </span>
-</mat-toolbar>
+
+<!-- <div class="p-3 mb-2 bg-dark">
+    <nav class="navbar navbar-expand-lg .navbar-dark bg-dark" style="font-size: Larger;">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                <a class="nav-link" routerLink='/home'> Home Page <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item ">
+                    <span></span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink='/registration'> Register </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink='/login'> Login </a>
+                </li>
+
+            </ul>
+            
+            <button class="btn btn-sm btn-outline-secondary" type="button">Logout</button>
+        </div>
+    </nav>
+</div> -->
+<app-navigation></app-navigation>
+
 <div class="example-container" >
     <h2>Login</h2>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div >
+        <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" formControlName="username"  [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-            <div *ngIf="submitted && f.username.errors" >
+            <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                 <div *ngIf="f.username.errors.required">Username is required</div>
             </div>
         </div>
-        <div >
+        <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" formControlName="password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-            <div *ngIf="submitted && f.password.errors" >
+            <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                 <div *ngIf="f.password.errors.required">Password is required</div>
             </div>
         </div>
-        <div >
-            <button [disabled]="loading" >
-                <span *ngIf="loading" ></span>
+        <div class="form-group">
+            <button [disabled]="loading" class="btn btn-primary">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                 Login
             </button>
-            <a routerLink="/register" >Register</a>
+            <a routerLink="/register" class="btn btn-link">Register</a>
         </div>
     </form>
 </div>
