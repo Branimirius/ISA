@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
+import { InstructorProfileComponent } from './instructor-profile/instructor-profile.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { LoginComponent } from './login/login.component';
     RegistrationComponent,
     NavigationComponent,
     LandingPageComponent,
-    LoginComponent
+    LoginComponent,
+    InstructorProfileComponent
   ],
   imports: [
     BrowserModule,
