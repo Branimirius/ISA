@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
     loading = false;
     submitted = false;
     returnUrl: string;
+    wrong = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -21,9 +22,10 @@ export class LoginComponent implements OnInit {
         private alertService: AlertService
     ) {
         // redirect to home if already logged in
-        // if (this.authenticationService.currentUserValue) {
-        //     this.router.navigate(['/']);
-        // }
+        if (this.authenticationService.currentUserValue.id != null) {
+            
+             this.router.navigate(['/']);
+        }
         this.loginForm = this.formBuilder.group({
           username: ['', Validators.required],
           password: ['', Validators.required]
@@ -54,17 +56,23 @@ export class LoginComponent implements OnInit {
         if (this.loginForm.invalid) {
             return;
         }
-
+        this.wrong = false;
         this.loading = true;
         this.authenticationService.login(this.f.username.value, this.f.password.value)
         .pipe(first())
         .subscribe(
             data => {
-                this.router.navigate([this.returnUrl]);
+                if(data == null){
+                    this.loading = false;
+                }
+                else{
+                    this.router.navigate([this.returnUrl]);
+                }
             },
             error => {
                 this.alertService.error(error);
                 this.loading = false;
+                this.wrong = true;
             }
         );
     }

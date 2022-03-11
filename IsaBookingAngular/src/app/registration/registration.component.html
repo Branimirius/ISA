@@ -28,6 +28,11 @@
               </mat-form-field>
               <br>
               <mat-form-field appearance="fill" class="width-200">
+                <mat-label>Confirm Password</mat-label>
+                <input type="password" matInput [(ngModel)]="passwordConfirm">
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="fill" class="width-200">
                 <mat-label>Phone number</mat-label>
                 <input type="text" matInput [(ngModel)]="newUser.PhoneNumber" placeholder="Ex. 0631122333">
               </mat-form-field>
@@ -81,6 +86,11 @@
               <mat-form-field appearance="fill" class="width-200">
                 <mat-label>Password</mat-label>
                 <input type="password" matInput [(ngModel)]="newUser.Password">
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="fill" class="width-200">
+                <mat-label>Confirm Password</mat-label>
+                <input type="password" matInput [(ngModel)]="passwordConfirm">
               </mat-form-field>
               <br>
               <mat-form-field appearance="fill" class="width-200">
@@ -140,6 +150,11 @@
               </mat-form-field>
               <br>
               <mat-form-field appearance="fill" class="width-200">
+                <mat-label>Confirm Password</mat-label>
+                <input type="password" matInput [(ngModel)]="passwordConfirm">
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="fill" class="width-200">
                 <mat-label>Phone number</mat-label>
                 <input type="text" matInput [(ngModel)]="newUser.PhoneNumber" placeholder="Ex. 0631122333">
               </mat-form-field>
@@ -168,5 +183,67 @@
         </mat-grid-tile>
       </mat-grid-list>
   </mat-tab>
+  <mat-tab label="Instructor"> 
+    <div class="center">
+      <h3>Instructor Registration</h3>
+    </div>
+    <mat-grid-list cols="1" rowHeight="700px">
+      <mat-grid-tile>
+          <div class="example-container" >
+            <mat-form-field appearance="fill" class="width-200">
+              <mat-label>First name</mat-label>
+              <input type="text" matInput [(ngModel)]="newUser.FirstName">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" class="width-200">
+              <mat-label>Last name</mat-label>
+              <input type="text" matInput [(ngModel)]="newUser.LastName">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" class="width-200">
+              <mat-label>E-mail adress</mat-label>
+              <input type="text" matInput [(ngModel)]="newUser.Email" placeholder="Ex. pat@example.com" >
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" class="width-200">
+              <mat-label>Password</mat-label>
+              <input type="password" matInput [(ngModel)]="newUser.Password">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" class="width-200">
+              <mat-label>Confirm Password</mat-label>
+              <input type="password" matInput [(ngModel)]="passwordConfirm">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" class="width-200">
+              <mat-label>Phone number</mat-label>
+              <input type="text" matInput [(ngModel)]="newUser.PhoneNumber" placeholder="Ex. 0631122333">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" class="width-200">
+              <mat-label>Adress</mat-label>
+              <input type="text" matInput [(ngModel)]="newUser.Adress" placeholder="Ex. Bulevar Cara Lazara 1">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" class="width-200">
+              <mat-label>Country</mat-label>
+              <input type="text" matInput [(ngModel)]="newUser.Country" placeholder="Ex. Serbia">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" class="width-200">
+              <mat-label>City</mat-label>
+              <input type="text" matInput [(ngModel)]="newUser.City" placeholder="Ex. Novi Sad">
+            </mat-form-field>
+            <br>
+            <mat-card-actions>
+              <button (click) = "registerInstructor()" mat-raised-button color="primary">REGISTER</button>
+            </mat-card-actions>
+            <br>
+            <br><br>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+</mat-tab>
   
 </mat-tab-group>
+

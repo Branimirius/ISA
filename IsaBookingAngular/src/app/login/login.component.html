@@ -1,27 +1,3 @@
-
-<!-- <div class="p-3 mb-2 bg-dark">
-    <nav class="navbar navbar-expand-lg .navbar-dark bg-dark" style="font-size: Larger;">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                <a class="nav-link" routerLink='/home'> Home Page <span class="sr-only"></span></a>
-                </li>
-                <li class="nav-item ">
-                    <span></span>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink='/registration'> Register </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink='/login'> Login </a>
-                </li>
-
-            </ul>
-            
-            <button class="btn btn-sm btn-outline-secondary" type="button">Logout</button>
-        </div>
-    </nav>
-</div> -->
 <app-navigation></app-navigation>
 
 <div class="example-container" >
@@ -40,6 +16,9 @@
             <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                 <div *ngIf="f.password.errors.required">Password is required</div>
             </div>
+        </div>
+        <div>
+            <label *ngIf = "wrong" style="color:rgb(255, 0, 0)">Wrong username or password. Try again.</label>
         </div>
         <div class="form-group">
             <button [disabled]="loading" class="btn btn-primary">

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.UserDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.UserLoginDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.User;
 import rs.ac.uns.ftn.informatika.jpa.service.UserService;
 
@@ -86,6 +87,21 @@ public class UserController {
 		response.put("deleted", Boolean.TRUE);
 		
 		return response;
+	}
+	
+	@PostMapping(value = "/authenticate", consumes = "application/json")
+	public ResponseEntity<User> loginUser(@RequestBody UserLoginDTO userLoginDTO) {
+		System.out.println("KONTROLA 1: " + userLoginDTO.geteMail() + " " + userLoginDTO.getPass());
+		User user = userService.findOneByLogin(userLoginDTO.geteMail(), userLoginDTO.getPass());
+		if(userService.findOneByLogin(userLoginDTO.geteMail(), userLoginDTO.getPass()) != null) {
+			System.out.println("KONTROLA 3: " + user.geteMail() + " " + user.getPassword());
+			return ResponseEntity.ok().body(user);
+		}
+		else {
+			System.out.println("KONTROLA3: NULLLLL");
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+		}
+		//return ResponseEntity.ok().body(user);
 	}
 
 }

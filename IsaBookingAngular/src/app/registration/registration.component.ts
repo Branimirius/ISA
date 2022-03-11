@@ -9,9 +9,11 @@ import { RegistrationDto } from './registration.dto';
 })
 export class RegistrationComponent implements OnInit {
   @Input() public newUser: RegistrationDto;
+  public passwordConfirm : string;
 
   constructor(private rs : RegistrationService) {
     this.newUser = new RegistrationDto();
+    this.passwordConfirm = "";
   }
 
   ngOnInit(): void {
@@ -34,7 +36,7 @@ export class RegistrationComponent implements OnInit {
       alert("Uspesno ste se registrovali.");
     }
     else 
-      alert("Niste uneli sve potrebne podatke !");
+      alert("Niste ispravno uneli sve potrebne podatke !");
   }
 
   registerClient(): void{
@@ -44,14 +46,24 @@ export class RegistrationComponent implements OnInit {
       alert("Uspesno ste se registrovali.");
     }
     else 
-      alert("Niste uneli sve potrebne podatke !");
+      alert("Niste ispravno uneli sve potrebne podatke !");
+  }
+
+  registerInstructor(): void{
+    if (this.validate() == true){
+      console.log(this.newUser);
+      this.sendRegistration("INSTRUCTOR");
+      alert("Uspesno ste se registrovali.");
+    }
+    else 
+      alert("Niste ispravno uneli sve potrebne podatke !");
   }
 
   validate() : boolean{
     if (
       this.newUser.FirstName == "" || this.newUser.LastName == "" ||
       this.newUser.Email == "" || this.newUser.Password == "" || this.newUser.PhoneNumber == "" || this.newUser.Country == "" || this.newUser.City == "" ||
-      this.newUser.Adress == ""
+      this.newUser.Adress == "" || this.passwordConfirm != this.newUser.Password || this.passwordConfirm == ""
     )
       return false;
     else 

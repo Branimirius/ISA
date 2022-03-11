@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-navigation',
@@ -10,9 +10,12 @@ import { Router } from '@angular/router';
 export class NavigationComponent implements OnInit {
   pageTitle="Booking App";
   
-  constructor(private router: Router) {
-   }
+  constructor(private router: Router, private authenticationService: AuthenticationService) {
+    
+  }
   ngOnInit(): void {
   }
-
+  logOutClick(): void {
+    this.authenticationService.logout();
+  }
 }

@@ -19,6 +19,17 @@ public class UserService {
 	public User findOne(Long id) {
 		return userRepository.findById(id).orElseGet(null);
 	}
+	
+	public User findOneByLogin(String eMail, String pass) {
+		List<User> allUsers = findAll();
+		for(User u : allUsers) {
+			System.out.println("KONTROLA 2: " + u.geteMail() + " " + u.getPassword());
+			if((u.geteMail().equals(eMail) ) && (u.getPassword().equals(pass))) {
+				return u;
+			}
+		}
+		return null;
+	}
 
 	public List<User> findAll() {
 		return userRepository.findAll();
