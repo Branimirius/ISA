@@ -59,6 +59,8 @@ public class FishingClassReservation {
 		this.price = price;
 		this.fishingClass = fishingClass;
 	}
+	
+	public FishingClassReservation() {}
 
 	public long getId() {
 		return id;

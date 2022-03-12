@@ -8,6 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +23,9 @@ public class FishingClass {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@Column(name = "user_id")
+	private long userId;
+	
 	@Column(name = "adress", nullable = false)
 	private String adress;
 	
@@ -29,12 +35,14 @@ public class FishingClass {
 	@Column(name = "instructor_bio", nullable = true)
 	private String instructorBio;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "fishingClass", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<FishingClassImage> images = new HashSet<FishingClassImage>();
 	
 	@Column(name = "max_cap", nullable = true)
 	private Integer maxCap;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "fishingClass", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<FishingClassReservation> reservations = new HashSet<FishingClassReservation>();
 	
@@ -50,11 +58,12 @@ public class FishingClass {
 	@Column(name = "cancel_conditions", nullable = true)
 	private String cancelConditions;
 
-	public FishingClass(long id, String adress, String description, String instructorBio, Set<FishingClassImage> images,
+	public FishingClass(long id, long userId, String adress, String description, String instructorBio, Set<FishingClassImage> images,
 			Integer maxCap, Set<FishingClassReservation> reservations, String rules, String equipment, String menu,
 			String cancelConditions) {
 		super();
 		this.id = id;
+		this.userId = userId;
 		this.adress = adress;
 		this.description = description;
 		this.instructorBio = instructorBio;
@@ -66,6 +75,8 @@ public class FishingClass {
 		this.menu = menu;
 		this.cancelConditions = cancelConditions;
 	}
+	
+	public FishingClass() {}
 
 	public long getId() {
 		return id;
@@ -73,6 +84,14 @@ public class FishingClass {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public long getUserId() {
+	return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public String getAdress() {

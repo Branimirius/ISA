@@ -35,6 +35,8 @@ public class FishingClassImage {
 		this.image = image;
 		this.fishingClass = fishingClass;
 	}
+	
+	public FishingClassImage() {}
 
 	public long getId() {
 		return id;

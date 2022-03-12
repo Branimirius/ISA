@@ -32,7 +32,7 @@ insert into users (first_name, last_name, email, password, phone, adress, countr
 insert into users (first_name, last_name, email, password, phone, adress, country, city, reg_type) values ('Krstoljub', 'Jakovljevic', 'krstoljub@gmail.com', '123', '45994', 'Prilipac', 'Srbija', 'Pozega', 'HOUSE_OWNER');
 insert into users (first_name, last_name, email, password, phone, adress, country, city, reg_type) values ('Dunja', 'Dunjic', 'dunja@gmail.com', '123', '45994', 'Nemanjina', 'Srbija', 'Pozega', 'CLIENT');
 
-insert into fishing_class (adress, description, instructor_bio, max_cap, rules, equipment, menu, cancel_conditions) values ('Narodnog Fronta 14, Novi Sad', 'Veoma lepo', 'Dobar covek', 5, 'Nema pravila', 'Sva oprema', 'Pecanje 50e, Obuka i pecanje 100e', 'Vracamo novac');
+insert into fishing_class (user_id, adress, description, instructor_bio, max_cap, rules, equipment, menu, cancel_conditions) values (2, 'Narodnog Fronta 14, Novi Sad', 'Veoma lepo', 'Dobar covek', 5, 'Nema pravila', 'Sva oprema', 'Pecanje 50e, Obuka i pecanje 100e', 'Vracamo novac');
 
 insert into fishing_class_images (image, class_id) values (null, 1);
 
