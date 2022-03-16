@@ -30,7 +30,7 @@ public class FishingClassController {
 	
 	//get fishingClasss
 	@GetMapping(value = "/classes")
-	public List<FishingClass> getAllFishingClasss(){
+	public List<FishingClass> getAllFishingClasses(){
 		System.out.println("KONTROLA 500: ");
 		return this.fishingClassService.findAll();
 	}

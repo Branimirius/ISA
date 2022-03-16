@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.informatika.jpa.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,17 @@ public class FishingClassImageService {
 	
 	public FishingClassImage findOne(Long id) {
 		return fishingClassImageRepository.findById(id).orElseGet(null);
+	}
+	
+	public List<FishingClassImage> findByClassId(Long id) {
+		List<FishingClassImage> ret = new ArrayList<FishingClassImage>();
+		for(FishingClassImage fci : findAll()) {
+			if(fci.getFishingClass().getId() == id) {
+				ret.add(fci);
+			}
+		}
+		System.out.println("BROJ ELEMENATA U GALERIJI: " + ret.size());
+		return ret;
 	}
 
 	public List<FishingClassImage> findAll() {
