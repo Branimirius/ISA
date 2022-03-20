@@ -15,8 +15,8 @@ export class InstructorProfileComponent implements OnInit {
   fishingProfile: Fishing
   fishingImages: FishingImage[]
   selectedFile: File;
-  retrievedImage: any;
-  
+  retrievedImages: any[];
+  slideIndex: number;
   base64Data: any;
   retrieveResonse: any;
   message: string;
@@ -24,18 +24,24 @@ export class InstructorProfileComponent implements OnInit {
 
   constructor(private fishingService: FishingService,
               private authenticationService: AuthenticationService,
-              private httpClient: HttpClient) {
+              private httpClient: HttpClient
+              ) {
     this.fishingProfile = new Fishing;
     this.fishingImages = [];
+    this.retrievedImages = [];
     this.message = "";
     this.selectedFile = new File([""], "filename");
+    this.slideIndex = 1;
     this.GetFishingProfile();
     this.GetFishingProfileGallery();
+    this.getImages();
    }
 
   ngOnInit(): void {
     this.GetFishingProfile();
     this.GetFishingProfileGallery();
+    this.getImages();
+
     console.log("ODRADIO", this.fishingProfile.adress)
   }
 
@@ -87,7 +93,6 @@ export class InstructorProfileComponent implements OnInit {
     };
     let headers = new HttpHeaders({
       'Content-Type': 'application/json' });
-    let options = { headers: headers, observe: 'response' };
 
     //FormData API provides methods and properties to allow us easily prepare form data to be sent with POST HTTP requests.
     const uploadImageData = new FormData();
@@ -101,20 +106,28 @@ export class InstructorProfileComponent implements OnInit {
         } else {
           this.message = 'Image not uploaded successfully';
         }
+        this.getImages();
       }
       );
   }
     //Gets called when the user clicks on retieve image button to get the image from back end
-    getImage() {
+    getImages() {
     //Make a call to Sprinf Boot to get the Image Bytes.
-    this.httpClient.get('http://localhost:8081/api/fishingImages/get/' + this.fishingProfile.id)
-      .subscribe(
-        res => {
-          this.retrieveResonse = res;
-          this.base64Data = this.retrieveResonse.image;
-          this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-        }
-      );
+      this.httpClient.get('http://localhost:8081/api/fishingImages/get/' + this.fishingProfile.id)
+        .subscribe(
+          (res: any) => {
+            this.retrievedImages.length = 0;
+            this.retrieveResonse = res;
+            if(res != null){
+              for(const d of res as any){
+                this.base64Data = d.image;
+                this.retrievedImages.push('data:image/jpeg;base64,' + this.base64Data);
+              }
+              this.showSlides(this.slideIndex);
+              this.currentSlide(this.slideIndex);
+            }
+          }
+        );
     }
 
     _base64ToArrayBuffer(base64: any): ArrayBuffer {
@@ -126,5 +139,36 @@ export class InstructorProfileComponent implements OnInit {
       }
       return bytes.buffer;
   }
+  // Next/previous controls
+plusSlides(n: number) {
+  this.showSlides(this.slideIndex += n);
+}
+
+// Thumbnail image controls
+currentSlide(n: number) {
+  this.showSlides(this.slideIndex = n);
+}
+
+showSlides(n: number) {
+  if(this.retrievedImages.length > 0){
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("dot");
+    if (!slides || !dots) {
+      return; // don't do the rest
+    }
+    if (n > slides.length) {this.slideIndex = 1}
+    if (n < 1) {this.slideIndex = slides.length}
+    for (i = 0; i < slides.length; i++) {
+        slides[i].setAttribute("style", "display: none");
+
+    }
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[this.slideIndex-1].setAttribute("style", "display: block");
+    dots[this.slideIndex-1].className += " active";
+  }
+}
 
 }

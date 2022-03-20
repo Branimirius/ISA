@@ -32,39 +32,41 @@
     </div>
 </div>
 <div class="container row">
+   
     <div class="col-md-6">
-        <input type="text" class="form-control" id="name" placeholder="image name" [(ngModel)]="imageName"
-            name="name" />
-    </div>
-    <div class="col-md-6">
-        <input type="button" (click)="getImage()" value="Get Image">
+        <input type="button" (click)="getImages()" value="Get Images">
     </div>
 </div>
-<div class="container row">
+<!-- <div class="container row">
     <div class="col-md-12">
-        <div *ngIf=retrievedImage>
-            <img [src]="retrievedImage">
+        <div *ngIf=retrievedImages>
+            <img [src]="retrievedImages[0]" style="max-height: 100%; max-width: 100%">
         </div>
     </div>
+</div> -->
+
+<div class="slideshow-container" >
+    <div *ngFor="let image of retrievedImages; let i = index" class="mySlides fade" >
+        
+            <div class="numbertext">{{i+1}} / {{retrievedImages.length}}</div>
+            
+            <img src={{image}} style="max-height:100%; max-width: 75%; display: block; margin-left: auto;
+            margin-right: auto;">
+            
+            <div class="text">Caption Text</div>
+                        
+    </div>
+    <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
+    <a class="next" (click)="plusSlides(1)">&#10095;</a>
+</div>
+<br>
+
+<!-- The dots/circles -->
+<div style="text-align:center">
+  <span *ngFor="let image of retrievedImages; let i = index" class="dot" (click)="currentSlide(i+1)"></span>
+  
 </div>
 
-<div class="container-fluid">
-    <div class="row flex-row flex-nowrap">
-        <div class="col-3">
-            <div class="card card-block">Card</div>
-        </div>
-        <div class="col-3">
-            <div class="card card-block">Card</div>
-        </div>
-        <div class="col-3">
-            <div class="card card-block">Card</div>
-        </div>
-        <div class="col-3">
-            <div class="card card-block">Card</div>
-        </div>
-        
-    </div>
-</div>
 <p>instructor-profile works!</p>
 
 <div class="container">

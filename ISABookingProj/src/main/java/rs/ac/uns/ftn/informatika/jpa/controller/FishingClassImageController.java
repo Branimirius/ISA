@@ -75,19 +75,18 @@ public class FishingClassImageController {
 	}
 	
 	@GetMapping(path = { "/get/{fishingId}" })
-	public FishingClassImage getImages(@PathVariable("fishingId") long id) throws IOException {
+	public List<FishingClassImage> getImages(@PathVariable("fishingId") long id) throws IOException {
 		List<FishingClassImage> ret = new ArrayList<FishingClassImage>();
-		int i = 0;
-		for(FishingClassImage fci : fishingClassImageService.findByClassId(id)) {
-			if(i > 0) {
+		List<FishingClassImage> allImages = fishingClassImageService.findByClassId(id);
+		if(allImages.size() > 0) {
+			for(FishingClassImage fci : fishingClassImageService.findByClassId(id)) {		
 				FishingClassImage img = new FishingClassImage(fci.getId(), decompressBytes(fci.getImage()), fci.getFishingClass());
-				ret.add(img);
+				ret.add(img);			
 			}
-			i++;
-			
+			return ret;
 		}
+		return null;	
 		
-		return ret.get(0);
 	}
 	
 	//save fishingClassImage
