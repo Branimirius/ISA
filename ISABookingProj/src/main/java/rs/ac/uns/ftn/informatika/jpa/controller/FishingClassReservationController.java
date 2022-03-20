@@ -23,7 +23,7 @@ import rs.ac.uns.ftn.informatika.jpa.service.FishingClassReservationService;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping(value = "api")
+@RequestMapping(value = "api/fishingReservations")
 public class FishingClassReservationController {
 	@Autowired
 	private FishingClassReservationService fishingClassReservationService;

@@ -5,6 +5,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { Observable } from 'rxjs';
 import { FishingImage } from '../models/fishing-image';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import { FishingReservation } from '../models/fishing-reservation';
 
 @Component({
   selector: 'app-instructor-profile',
@@ -12,8 +13,9 @@ import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
   styleUrls: ['./instructor-profile.component.css']
 })
 export class InstructorProfileComponent implements OnInit {
-  fishingProfile: Fishing
-  fishingImages: FishingImage[]
+  fishingProfile: Fishing;
+  fishingImages: FishingImage[];
+  fishingReservations: FishingReservation[];
   selectedFile: File;
   retrievedImages: any[];
   slideIndex: number;
@@ -28,18 +30,21 @@ export class InstructorProfileComponent implements OnInit {
               ) {
     this.fishingProfile = new Fishing;
     this.fishingImages = [];
+    this.fishingReservations = [];
     this.retrievedImages = [];
     this.message = "";
     this.selectedFile = new File([""], "filename");
     this.slideIndex = 1;
     this.GetFishingProfile();
     this.GetFishingProfileGallery();
+    this.GetFishingProfileReservations();
     this.getImages();
    }
 
   ngOnInit(): void {
     this.GetFishingProfile();
     this.GetFishingProfileGallery();
+    this.GetFishingProfileReservations();
     this.getImages();
 
     console.log("ODRADIO", this.fishingProfile.adress)
@@ -58,6 +63,7 @@ export class InstructorProfileComponent implements OnInit {
   GetFishingProfileGallery(){
     this.fishingService.GetFishingImages()
     .subscribe((data: any) => {
+      this.fishingImages.length = 0;
       for(const d of (data as any)){
         if(this.fishingProfile.id == d.fishingClass.id){
           if(!this.ImageAlreadyLoaded(d.id)){
@@ -65,7 +71,19 @@ export class InstructorProfileComponent implements OnInit {
           }
         }
       }
-      console.log(this.fishingImages)
+      console.log("Images: ", this.fishingImages)
+    })
+  }
+  GetFishingProfileReservations(){
+    this.fishingService.GetFishingReservations()
+    .subscribe((data: any) => {
+      this.fishingReservations.length = 0;
+      for(const d of (data as any)){
+        if(this.fishingProfile.id == d.fishingClass.id){
+          this.fishingReservations.push(d);
+        }
+      }
+      console.log("Reservations: ", this.fishingReservations)
     })
   }
   ImageAlreadyLoaded(id: number): boolean{
