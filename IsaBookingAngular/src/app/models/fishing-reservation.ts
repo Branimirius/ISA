@@ -3,6 +3,7 @@ import { Fishing } from "./fishing";
 
 export class FishingReservation {
     id: number;
+    userId: number;
     start: Date;
     end: Date;
     duration: number;
@@ -14,6 +15,7 @@ export class FishingReservation {
 
     constructor(){
         this.id = 0
+        this.userId = 0
         this.start = new Date()
         this.end = new Date()
         this.duration = 0

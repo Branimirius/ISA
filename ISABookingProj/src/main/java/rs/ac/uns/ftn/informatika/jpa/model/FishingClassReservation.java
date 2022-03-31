@@ -21,6 +21,9 @@ public class FishingClassReservation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@Column(name = "user_id", nullable = true)
+	private long userId;
+	
 	@Column(name = "start", nullable = false)
 	private Timestamp start;
 	

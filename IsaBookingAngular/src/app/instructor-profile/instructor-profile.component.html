@@ -65,7 +65,41 @@
   
 </div>
 
-<p>instructor-profile works!</p>
+<h3>Reservations:</h3>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th><abbr >Start</abbr></th>
+        <th><abbr >End</abbr></th>
+        <th><abbr >Duration</abbr></th>
+        <th><abbr >Location</abbr></th>
+        <th><abbr >Price</abbr></th>
+        <th><abbr >Pts</abbr></th>
+      </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th><abbr >Start</abbr></th>
+            <th><abbr >End</abbr></th>
+            <th><abbr >Duration</abbr></th>
+            <th><abbr >Location</abbr></th>
+            <th><abbr >Price</abbr></th>
+            <th><abbr >Pts</abbr></th>
+          </tr>
+    </tfoot>
+    <tbody *ngFor = "let res of fishingReservations">
+        <tr>
+            <td>{{formatDate(res.start)}}</td>
+            <td>{{formatDate(res.end)}}</td>
+            <td>{{res.duration}}min</td>
+            <td>{{res.location}}</td>
+            <td>{{res.price}}eur</td>
+            <td>3</td>
+        </tr>
+    </tbody>
+</table>
+
 
 <div class="container">
     <div class="card-deck mb-3 text-center">

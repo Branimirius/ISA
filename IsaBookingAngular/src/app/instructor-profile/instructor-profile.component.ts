@@ -79,7 +79,7 @@ export class InstructorProfileComponent implements OnInit {
     .subscribe((data: any) => {
       this.fishingReservations.length = 0;
       for(const d of (data as any)){
-        if(this.fishingProfile.id == d.fishingClass.id){
+        if((this.fishingProfile.id == d.fishingClass.id) && (d.userId != 0)){
           this.fishingReservations.push(d);
         }
       }
@@ -187,6 +187,12 @@ showSlides(n: number) {
     slides[this.slideIndex-1].setAttribute("style", "display: block");
     dots[this.slideIndex-1].className += " active";
   }
+}
+
+formatDate(date: Date) : string{
+  let retVal = ""
+  retVal = date.toString().substring(0,10) + " " + date.toString().substring(11,16)
+  return retVal
 }
 
 }
