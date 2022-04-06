@@ -1,11 +1,33 @@
-<app-navigation></app-navigation>
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+<app-navigation *ngIf="adminProfile.active"></app-navigation>
+<div *ngIf="adminProfile.active" class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">{{adminProfile.firstName}} {{adminProfile.lastName}}</h1>
     <p class="lead">{{adminProfile.eMail}}</p>
 </div>
-<p>{{adminProfile.adress}}</p>
+<p *ngIf="adminProfile.active">{{adminProfile.adress}}</p>
+<div class="center">
+    <h1 *ngIf="!adminProfile.active" class="display-4"> Change your password to proceed: </h1>
+</div>
+<mat-grid-list *ngIf="!adminProfile.active" cols="1" rowHeight="700px">
+    <div class="example-container" >
+        <mat-grid-tile>
+            <mat-form-field appearance="fill" class="width-200">
+                <mat-label>Password</mat-label>
+                <input type="password" matInput [(ngModel)]="passwordChange">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" class="width-200">
+                <mat-label>Confirm Password</mat-label>
+                <input type="password" matInput [(ngModel)]="passwordConfirm">
+            </mat-form-field>
+            <br>
+                <mat-card-actions>
+                <button (click) = "changePassword()" mat-raised-button color="primary">Proceed</button>
+                </mat-card-actions>
+        </mat-grid-tile>
+    </div>
+</mat-grid-list>
 
-<mat-tab-group>
+<mat-tab-group *ngIf="adminProfile.active">
     <mat-tab class="tab-center" label="User Managing"> 
         <h3>Pending Registrations:</h3>
 
@@ -17,7 +39,7 @@
                 <th><abbr >eMail</abbr></th>
                 <th><abbr >Phone</abbr></th>
                 <th><abbr >Adress</abbr></th>
-                <th><abbr >Country</abbr></th>
+                <th><abbr >Type</abbr></th>
                 <th><abbr ></abbr></th>
             </tr>
             </thead>
@@ -28,7 +50,7 @@
                     <th><abbr >eMail</abbr></th>
                     <th><abbr >Phone</abbr></th>
                     <th><abbr >Adress</abbr></th>
-                    <th><abbr >Country</abbr></th>
+                    <th><abbr >Type</abbr></th>
                     <th><abbr ></abbr></th>
 
                 </tr>
@@ -40,7 +62,8 @@
                     <td>{{pr.eMail}}</td>
                     <td>{{pr.phone}}</td>
                     <td>{{pr.adress}}</td>
-                    <td>{{pr.country}}</td>
+                    <td>{{pr.regType}}</td>
+
                     <td>
                         <button (click)="ActivateRegistration(pr)" type="button" class="btn btn-primary">Activate</button>
                         <button (click)="DeleteRegistration(pr.id)" type="button" class="btn btn-secondary">Delete</button>
@@ -62,7 +85,7 @@
                 <th><abbr >eMail</abbr></th>
                 <th><abbr >Phone</abbr></th>
                 <th><abbr >Adress</abbr></th>
-                <th><abbr >Country</abbr></th>
+                <th><abbr >Type</abbr></th>
                 <th><abbr ></abbr></th>
             </tr>
             </thead>
@@ -73,7 +96,7 @@
                     <th><abbr >eMail</abbr></th>
                     <th><abbr >Phone</abbr></th>
                     <th><abbr >Adress</abbr></th>
-                    <th><abbr >Country</abbr></th>
+                    <th><abbr >Type</abbr></th>
                     <th><abbr ></abbr></th>
 
                 </tr>
@@ -85,7 +108,7 @@
                     <td>{{user.eMail}}</td>
                     <td>{{user.phone}}</td>
                     <td>{{user.adress}}</td>
-                    <td>{{user.country}}</td>
+                    <td>{{user.regType}}</td>
                     <td>
                         <button (click)="DeleteRegistration(user.id)" type="button" class="btn btn-secondary">Delete</button>
                     </td>
@@ -119,14 +142,10 @@
                   <br>
                   <mat-form-field appearance="fill" class="width-200">
                     <mat-label>Password</mat-label>
-                    <input type="password" matInput [(ngModel)]="updatedProfile.password">
+                    <input type="text" matInput [(ngModel)]="updatedProfile.password">
                   </mat-form-field>
                   <br>
-                  <mat-form-field appearance="fill" class="width-200">
-                    <mat-label>Confirm Password</mat-label>
-                    <input type="password" matInput [(ngModel)]="passwordConfirm">
-                  </mat-form-field>
-                  <br>
+                  
                   <mat-form-field appearance="fill" class="width-200">
                     <mat-label>Phone number</mat-label>
                     <input type="text" matInput [(ngModel)]="updatedProfile.phone" placeholder="Ex. 0631122333">
@@ -149,6 +168,67 @@
                   <br>
                   <mat-card-actions>
                     <button (click) = "updateProfile()" mat-raised-button color="primary">Save</button>
+                  </mat-card-actions>
+                  <br>
+                  <br><br>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+    </mat-tab> 
+    <mat-tab class="tab-center" label="New Admin"> 
+        <div class="center">
+            <h3>Add new admin:</h3>
+          </div>
+          <mat-grid-list cols="1" rowHeight="700px">
+            <mat-grid-tile>
+                <div class="example-container" >
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>First name</mat-label>
+                    <input type="text" matInput [(ngModel)]="newProfile.FirstName">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>Last name</mat-label>
+                    <input type="text" matInput [(ngModel)]="newProfile.LastName">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>E-mail adress</mat-label>
+                    <input type="text" matInput [(ngModel)]="newProfile.Email" placeholder="Ex. pat@example.com" >
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput [(ngModel)]="newProfile.Password">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>Confirm Password</mat-label>
+                    <input type="password" matInput [(ngModel)]="passwordConfirm">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>Phone number</mat-label>
+                    <input type="text" matInput [(ngModel)]="newProfile.PhoneNumber" placeholder="Ex. 0631122333">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>Adress</mat-label>
+                    <input type="text" matInput [(ngModel)]="newProfile.Adress" placeholder="Ex. Bulevar Cara Lazara 1">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>Country</mat-label>
+                    <input type="text" matInput [(ngModel)]="newProfile.Country" placeholder="Ex. Serbia">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>City</mat-label>
+                    <input type="text" matInput [(ngModel)]="newProfile.City" placeholder="Ex. Novi Sad">
+                  </mat-form-field>
+                  <br>
+                  <mat-card-actions>
+                    <button (click) = "registerAdmin()" mat-raised-button color="primary">Add</button>
                   </mat-card-actions>
                   <br>
                   <br><br>

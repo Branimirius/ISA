@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
+import { RegistrationDto } from '../registration/registration.dto';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserService } from '../services/user.service';
+import { RegistrationService} from '../services/registration.service'
 
 @Component({
   selector: 'app-admin-profile',
@@ -12,17 +14,22 @@ import { UserService } from '../services/user.service';
 export class AdminProfileComponent implements OnInit {
   adminProfile: User;
   updatedProfile: User;
+  newProfile: RegistrationDto;
   pendingRegistrations: User[];
   activeUsers: User[];
+  passwordChange: string;
   passwordConfirm : string;
 
   constructor(private authenticationService: AuthenticationService,
-              private userService: UserService) { 
+              private userService: UserService,
+              private registrationService: RegistrationService) { 
     this.adminProfile = authenticationService.currentUserValue;
     this.updatedProfile = authenticationService.currentUserValue;
+    this.newProfile = new RegistrationDto();
     this.pendingRegistrations = [];
     this.activeUsers = [];
     this.passwordConfirm = "";
+    this.passwordChange = "";
     this.GetUsers();
   }
 
@@ -35,7 +42,7 @@ export class AdminProfileComponent implements OnInit {
       this.pendingRegistrations.length = 0;
       this.activeUsers.length = 0;
       for(const d of (data as any)){
-        if(!d.active){
+        if(!d.active && d.regType !== "ADMIN"){
           this.pendingRegistrations.push(d);
         }
         else{
@@ -60,14 +67,35 @@ export class AdminProfileComponent implements OnInit {
   RefreshData(){
     this.GetUsers();
     this.adminProfile = this.authenticationService.currentUserValue;
+    this.newProfile = new RegistrationDto();
   }
 
   updateProfile(){
     this.adminProfile = this.updatedProfile;
     this.userService.UpdateUser(this.updatedProfile).subscribe((data:any) => {
-      //this.authenticationService.login(this.updatedProfile.eMail, this.updatedProfile.password);
       this.RefreshData();
     });
+  }
+
+  registerAdmin(){
+    this.registrationService.RegisterUser(this.newProfile, "ADMIN", false).subscribe((data:any) => {
+      this.RefreshData();
+    });
+  }
+
+  changePassword(){
+    if(this.passwordChange === this.passwordConfirm){
+      this.updatedProfile.password = this.passwordChange;
+      this.adminProfile.password = this.passwordChange;
+      this.adminProfile.active = true;
+      this.userService.UpdateUser(this.updatedProfile).subscribe((data:any) => {
+        this.RefreshData();
+      });
+    }
+    else{
+      alert("Passwords didn't match. Try again.");
+      this.passwordConfirm = "";
+    }
   }
 
 }

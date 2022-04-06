@@ -10,6 +10,7 @@ export class User {
     city: string;
     regType: string; 
     token: string;
+    active: boolean;
 
     constructor(){
         this.id = 0;
@@ -23,5 +24,6 @@ export class User {
         this.country = "";
         this.city = "";
         this.regType = ""; 
+        this.active = false;
     }
 }
