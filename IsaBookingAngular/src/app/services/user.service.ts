@@ -34,5 +34,9 @@ export class UserService {
           let options = { headers: headers };
         return this.http.put<any>("http://localhost:8081/api/users", body, options);
     }
+
+    public DeleteUser(id: number){
+      return this.http.delete<any>("http://localhost:8081/api/users/" + id)
+    }
     
 }
