@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.FishingClassReservationDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.FishingClass;
 import rs.ac.uns.ftn.informatika.jpa.model.FishingClassReservation;
 import rs.ac.uns.ftn.informatika.jpa.service.FishingClassReservationService;
 
@@ -31,6 +32,9 @@ public class FishingClassReservationController {
 	//get fishingClassReservations
 	@GetMapping(value = "/fishingClassReservations")
 	public List<FishingClassReservation> getAllFishingClassReservations(){
+		for(FishingClassReservation fcr : this.fishingClassReservationService.findAll()) {
+			System.out.println("RESERVATIONS: " + fcr.getUserId());
+		}
 		return this.fishingClassReservationService.findAll();
 	}
 	
@@ -42,27 +46,27 @@ public class FishingClassReservationController {
 	}
 	
 	//save fishingClassReservation
-	/*
+	
 	@PostMapping(value = "/fishingClassReservations", consumes = "application/json")
 	public ResponseEntity<FishingClassReservationDTO> saveFishingClassReservation(@RequestBody FishingClassReservationDTO fishingClassReservationDTO) {
-
+		System.out.println("DODAVANJE REZERVACIJE: " + fishingClassReservationDTO.getExtraOffers());
 		FishingClassReservation fishingClassReservation = new FishingClassReservation();
 		fishingClassReservation.setId(fishingClassReservationDTO.getId());
 		fishingClassReservation.setUserId(fishingClassReservationDTO.getUserId());
-		fishingClassReservation.setAdress(fishingClassReservationDTO.getAdress());
-		fishingClassReservation.setDescription(fishingClassReservationDTO.getDescription());
-		fishingClassReservation.setInstructorBio(fishingClassReservationDTO.getInstructorBio());
+		fishingClassReservation.setLocation(fishingClassReservationDTO.getLocation());
+		fishingClassReservation.setDuration(fishingClassReservationDTO.getDuration());
+		fishingClassReservation.setStart(fishingClassReservationDTO.getStart());
 		fishingClassReservation.setMaxCap(fishingClassReservationDTO.getMaxCap());
-		fishingClassReservation.setRules(fishingClassReservationDTO.getRules());
-		fishingClassReservation.setEquipment(fishingClassReservationDTO.getEquipment());
-		fishingClassReservation.setMenu(fishingClassReservationDTO.getMenu());
-		fishingClassReservation.setCancelConditions(fishingClassReservationDTO.getCancelConditions());
+		fishingClassReservation.setEnd(fishingClassReservationDTO.getEnd());
+		fishingClassReservation.setPrice(fishingClassReservationDTO.getPrice());
+		fishingClassReservation.setFishingClass(new FishingClass(fishingClassReservationDTO.getFishingClass()));
+		
 		fishingClassReservation = fishingClassReservationService.save(fishingClassReservation);
 		return new ResponseEntity<>(new FishingClassReservationDTO(fishingClassReservation), HttpStatus.CREATED);
 	}
 	
 	//update fishingClassReservation
-	
+	/*
 	@PutMapping(value = "/fishingClassReservations", consumes = "application/json")
 	public ResponseEntity<FishingClassReservationDTO> updateFishingClassReservation(@RequestBody FishingClassReservationDTO fishingClassReservationDTO) {
 		FishingClassReservation fishingClassReservation = fishingClassReservationService.findOne(fishingClassReservationDTO.getId());

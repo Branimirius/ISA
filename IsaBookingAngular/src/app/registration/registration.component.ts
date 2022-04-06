@@ -71,7 +71,12 @@ export class RegistrationComponent implements OnInit {
   }
 
   public sendRegistration(regType: string): void{
-    this.rs.RegisterUser(this.newUser, regType).subscribe();
+    if(regType == "CLIENT"){
+      this.rs.RegisterUser(this.newUser, regType, true).subscribe();
+    }
+    else{
+      this.rs.RegisterUser(this.newUser, regType, false).subscribe();
+    }
   }
 
 }

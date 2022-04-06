@@ -57,6 +57,7 @@ public class UserController {
 		user.setPassword(userDTO.getPassword());
 		user.setPhone(userDTO.getPhoneNumber());
 		user.setRegType(userDTO.getRegType());
+		user.setActive(userDTO.isActive());
 		user = userService.save(user);
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
 	}
@@ -64,6 +65,7 @@ public class UserController {
 	//update user
 	@PutMapping(value = "/users", consumes = "application/json")
 	public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
+		System.out.println("UPDATE: " + userDTO.getId() + " " + userDTO.getFirstName());
 		User user = userService.findOne(userDTO.getId());
 		user.setAdress(userDTO.getAdress());
 		user.setCity(userDTO.getCity());
@@ -74,7 +76,7 @@ public class UserController {
 		user.setPassword(userDTO.getPassword());
 		user.setPhone(userDTO.getPhoneNumber());
 		user.setRegType(userDTO.getRegType());
-
+		user.setActive(userDTO.isActive());
 		user = userService.save(user);
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
 	}
@@ -93,7 +95,7 @@ public class UserController {
 	public ResponseEntity<User> loginUser(@RequestBody UserLoginDTO userLoginDTO) {
 		System.out.println("KONTROLA 1: " + userLoginDTO.geteMail() + " " + userLoginDTO.getPass());
 		User user = userService.findOneByLogin(userLoginDTO.geteMail(), userLoginDTO.getPass());
-		if(userService.findOneByLogin(userLoginDTO.geteMail(), userLoginDTO.getPass()) != null) {
+		if((userService.findOneByLogin(userLoginDTO.geteMail(), userLoginDTO.getPass()) != null) && user.isActive()) {
 			System.out.println("KONTROLA 3: " + user.geteMail() + " " + user.getPassword());
 			return ResponseEntity.ok().body(user);
 		}

@@ -13,9 +13,10 @@ public class UserDTO {
 	private String country;
 	private String city;
 	private String regType;
+	private boolean active;
 	
 	public UserDTO(Long id, String firstName, String lastName, String eMail, String password, String phoneNumber, String adress,
-			String country, String city, String regType) {
+			String country, String city, String regType, boolean active) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -26,10 +27,11 @@ public class UserDTO {
 		this.country = country;
 		this.city = city;
 		this.regType = regType;
+		this.active = active;
 	}
 	
 	public UserDTO(User user) {
-		this(user.getId(), user.getFirstName(), user.getLastName(), user.geteMail(),user.getPassword(),user.getPhone(),user.getAdress(), user.getCountry(), user.getCity(), user.getRegType());
+		this(user.getId(), user.getFirstName(), user.getLastName(), user.geteMail(),user.getPassword(),user.getPhone(),user.getAdress(), user.getCountry(), user.getCity(), user.getRegType(), user.isActive());
 	}
 	
 	public UserDTO() {
@@ -97,6 +99,14 @@ public class UserDTO {
 	}
 	public void setRegType(String regType) {
 		this.regType = regType;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 	

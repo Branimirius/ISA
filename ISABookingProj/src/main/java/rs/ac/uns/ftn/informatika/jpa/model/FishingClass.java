@@ -11,6 +11,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.FishingClassDTO;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -74,6 +76,21 @@ public class FishingClass {
 		this.equipment = equipment;
 		this.menu = menu;
 		this.cancelConditions = cancelConditions;
+	}
+	
+	public FishingClass(FishingClassDTO dto) {
+		this.id = dto.getId();
+		this.userId = dto.getUserId();
+		this.adress = dto.getAdress();
+		this.description = dto.getDescription();
+		this.instructorBio = dto.getInstructorBio();
+		this.images = null;
+		this.maxCap = dto.getMaxCap();
+		this.reservations = null;
+		this.rules = dto.getRules();
+		this.equipment = dto.getEquipment();
+		this.menu = dto.getMenu();
+		this.cancelConditions = dto.getCancelConditions();
 	}
 	
 	public FishingClass() {}

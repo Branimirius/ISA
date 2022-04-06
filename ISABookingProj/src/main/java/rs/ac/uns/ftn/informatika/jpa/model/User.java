@@ -43,12 +43,15 @@ public class User {
 	@Column(name = "reg_type")
 	private String regType;
 	
+	@Column(name = "active")
+	private boolean active;
+	
 	public User() {
 		super();
 	}
 	
 	public User(long id, String firstName, String lastName, String eMail, String password, String phone, String adress,
-			String country, String city, String regType) {
+			String country, String city, String regType, boolean active) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -60,6 +63,7 @@ public class User {
 		this.country = country;
 		this.city = city;
 		this.regType = regType;
+		this.active = active;
 	}
 
 
@@ -141,6 +145,14 @@ public class User {
 
 	public void setRegType(String regType) {
 		this.regType = regType;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 	

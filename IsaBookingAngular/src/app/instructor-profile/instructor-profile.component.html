@@ -99,6 +99,95 @@
         </tr>
     </tbody>
 </table>
+<p>
+    <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+      ADD NEW
+    </button>
+  </p>
+  <div id="collapseExample" *ngIf ="isCollapsed">
+    <div class="card">
+      <div class="card-body">
+        <div class="center">
+            <h3>Add new available reservation: </h3>
+          </div>
+          <mat-grid-list cols="1" rowHeight="700px">
+            <mat-grid-tile>
+                <div class="example-container" >
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>Start</mat-label>
+                    <input type="datetime-local" matInput [(ngModel)]="newAvailableReservation.start">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>End</mat-label>
+                    <input type="datetime-local"  matInput [(ngModel)]="newAvailableReservation.end">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>Location</mat-label>
+                    <input type="text" matInput [(ngModel)]="newAvailableReservation.location"  placeholder="Narodnog Fronta 13, Novi Sad" >
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>Extra offers</mat-label>
+                    <input type="text" matInput [(ngModel)]="newAvailableReservation.extraOffers">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>Max cap</mat-label>
+                    <input type="number" matInput [(ngModel)]="newAvailableReservation.maxCap">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="fill" class="width-200">
+                    <mat-label>Price (eur)</mat-label>
+                    <input type="number" matInput [(ngModel)]="newAvailableReservation.price">
+                  </mat-form-field>
+                  <br>
+                  <mat-card-actions>
+                    <button  mat-raised-button (click)="addAvailableReservation()" color="primary">ADD</button>
+                  </mat-card-actions>
+                  <br>
+                  <br><br>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+      </div>
+    </div>
+  </div>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th><abbr >Start</abbr></th>
+        <th><abbr >End</abbr></th>
+        <th><abbr >Duration</abbr></th>
+        <th><abbr >Location</abbr></th>
+        <th><abbr >Price</abbr></th>
+        <th><abbr >Pts</abbr></th>
+      </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th><abbr >Start</abbr></th>
+            <th><abbr >End</abbr></th>
+            <th><abbr >Duration</abbr></th>
+            <th><abbr >Location</abbr></th>
+            <th><abbr >Price</abbr></th>
+            <th><abbr >Pts</abbr></th>
+          </tr>
+    </tfoot>
+    <tbody *ngFor = "let resA of availableReservations">
+        <tr>
+            <td>{{formatDate(resA.start)}}</td>
+            <td>{{formatDate(resA.end)}}</td>
+            <td>{{resA.duration}}min</td>
+            <td>{{resA.location}}</td>
+            <td>{{resA.price}}eur</td>
+            <td>3</td>
+        </tr>
+    </tbody>
+</table>
 
 
 <div class="container">

@@ -36,6 +36,23 @@ export class FishingService {
       return this.http.post('/api/v1/image-upload', formData);
     }
     
-    
-  
+    public AddAvailableReservation(res: FishingReservation){
+      const body = {
+        id: res.id,
+        userId : res.userId,
+        start : res.start,
+        end: res.end,
+        duration : res.duration,
+        location: res.location,
+        extraOffers: res.extraOffers,
+        maxCap : res.maxCap,
+        price : res.price,
+        fishingClass : res.fishingClass
+      };
+      console.log(body);
+      let headers = new HttpHeaders({
+        'Content-Type': 'application/json' });
+      let options = { headers: headers };
+      return this.http.post<any>("http://localhost:8081/api/fishingReservations/fishingClassReservations", body, options).subscribe();
+    }
 }

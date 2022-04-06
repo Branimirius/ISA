@@ -1,0 +1,47 @@
+<app-navigation></app-navigation>
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">{{adminProfile.firstName}} {{adminProfile.lastName}}</h1>
+    <p class="lead">{{adminProfile.eMail}}</p>
+</div>
+<p>{{adminProfile.adress}}</p>
+
+<h3>Pending Registrations:</h3>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th><abbr >Firstname</abbr></th>
+        <th><abbr >Lastname</abbr></th>
+        <th><abbr >eMail</abbr></th>
+        <th><abbr >Phone</abbr></th>
+        <th><abbr >Adress</abbr></th>
+        <th><abbr >Country</abbr></th>
+        <th><abbr ></abbr></th>
+      </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th><abbr >Firstname</abbr></th>
+            <th><abbr >Lastname</abbr></th>
+            <th><abbr >eMail</abbr></th>
+            <th><abbr >Phone</abbr></th>
+            <th><abbr >Adress</abbr></th>
+            <th><abbr >Country</abbr></th>
+            <th><abbr ></abbr></th>
+
+        </tr>
+    </tfoot>
+    <tbody *ngFor = "let pr of pendingRegistrations">
+        <tr>
+            <td>{{pr.firstName}}</td>
+            <td>{{pr.lastName}}</td>
+            <td>{{pr.eMail}}</td>
+            <td>{{pr.phone}}</td>
+            <td>{{pr.adress}}</td>
+            <td>{{pr.country}}</td>
+            <td><button (click)="ActivateRegistration(pr)" type="button" class="btn btn-primary">Activate</button></td>
+
+            
+        </tr>
+    </tbody>
+</table>

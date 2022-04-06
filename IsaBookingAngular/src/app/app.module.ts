@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { InstructorProfileComponent } from './instructor-profile/instructor-profile.component';
+import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { InstructorProfileComponent } from './instructor-profile/instructor-prof
     NavigationComponent,
     LandingPageComponent,
     LoginComponent,
-    InstructorProfileComponent
+    InstructorProfileComponent,
+    AdminProfileComponent
   ],
   imports: [
     BrowserModule,

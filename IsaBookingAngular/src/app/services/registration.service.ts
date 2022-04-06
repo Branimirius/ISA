@@ -13,7 +13,7 @@ export class RegistrationService {
       
     }
 
-    public RegisterUser(user: RegistrationDto, regType: string){
+    public RegisterUser(user: RegistrationDto, regType: string, active: boolean){
         const body = {
             firstName : user.FirstName,
             lastName: user.LastName,
@@ -23,11 +23,15 @@ export class RegistrationService {
             adress : user.Adress,
             country : user.Country,
             city : user.City,
-            regType : regType
+            regType : regType,
+            active: active
           };
           let headers = new HttpHeaders({
             'Content-Type': 'application/json' });
           let options = { headers: headers };
         return this.http.post<any>("http://localhost:8081/api/users", body, options);
     }
+
+
+    
 }

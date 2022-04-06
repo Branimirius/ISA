@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Fishing } from '../models/fishing';
 import { FishingService } from '../services/fishing.service'
 import { AuthenticationService } from '../services/authentication.service';
@@ -16,6 +16,7 @@ export class InstructorProfileComponent implements OnInit {
   fishingProfile: Fishing;
   fishingImages: FishingImage[];
   fishingReservations: FishingReservation[];
+  availableReservations: FishingReservation[];
   selectedFile: File;
   retrievedImages: any[];
   slideIndex: number;
@@ -23,6 +24,8 @@ export class InstructorProfileComponent implements OnInit {
   retrieveResonse: any;
   message: string;
   imageName: any;
+  public isCollapsed = false;
+  @Input() public newAvailableReservation: FishingReservation;
 
   constructor(private fishingService: FishingService,
               private authenticationService: AuthenticationService,
@@ -31,10 +34,12 @@ export class InstructorProfileComponent implements OnInit {
     this.fishingProfile = new Fishing;
     this.fishingImages = [];
     this.fishingReservations = [];
+    this.availableReservations = [];
     this.retrievedImages = [];
     this.message = "";
     this.selectedFile = new File([""], "filename");
     this.slideIndex = 1;
+    this.newAvailableReservation = new FishingReservation();
     this.GetFishingProfile();
     this.GetFishingProfileGallery();
     this.GetFishingProfileReservations();
@@ -78,12 +83,20 @@ export class InstructorProfileComponent implements OnInit {
     this.fishingService.GetFishingReservations()
     .subscribe((data: any) => {
       this.fishingReservations.length = 0;
+      this.availableReservations.length = 0;
       for(const d of (data as any)){
-        if((this.fishingProfile.id == d.fishingClass.id) && (d.userId != 0)){
-          this.fishingReservations.push(d);
+        if(this.fishingProfile.id == d.fishingClass.id){
+          if(d.userId != 0){
+            console.log(d)
+            this.fishingReservations.push(d);
+          }
+          else{
+            console.log(d)
+
+            this.availableReservations.push(d);
+          }
         }
       }
-      console.log("Reservations: ", this.fishingReservations)
     })
   }
   ImageAlreadyLoaded(id: number): boolean{
@@ -195,4 +208,22 @@ formatDate(date: Date) : string{
   return retVal
 }
 
+public addAvailableReservation(){
+  this.newAvailableReservation.fishingClass = this.fishingProfile;
+  this.newAvailableReservation.userId = 0;
+  this.newAvailableReservation.duration = (new Date(this.newAvailableReservation.end).getTime() - new Date(this.newAvailableReservation.start).getTime()) / (1000 * 60);
+  console.log(this.newAvailableReservation);
+  this.fishingService.AddAvailableReservation(this.newAvailableReservation)
+
+}
+
+validate() : boolean{
+  if (
+    this.newAvailableReservation.start == null || this.newAvailableReservation.end == null ||
+     this.newAvailableReservation.location == ""  || this.newAvailableReservation.maxCap == 0
+  )
+    return false;
+  else 
+    return true;
+}
 }

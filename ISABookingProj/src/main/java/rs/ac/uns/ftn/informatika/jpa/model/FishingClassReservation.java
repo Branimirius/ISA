@@ -49,10 +49,11 @@ public class FishingClassReservation {
 	@JoinColumn(name = "class_id")
 	private FishingClass fishingClass;
 
-	public FishingClassReservation(long id, Timestamp start, long duration, String location,
+	public FishingClassReservation(long id, long userId, Timestamp start, long duration, String location,
 			Integer maxCap, String extraOffers, Double price, FishingClass fishingClass) {
 		super();
 		this.id = id;
+		this.userId = userId;
 		this.start = start;
 		this.endTime.setTime(start.getTime() + (duration*60000));
 		this.duration = duration;
@@ -71,6 +72,22 @@ public class FishingClassReservation {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public Timestamp getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Timestamp endTime) {
+		this.endTime = endTime;
 	}
 
 	public Timestamp getStart() {
