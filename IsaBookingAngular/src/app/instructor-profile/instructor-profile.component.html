@@ -1,110 +1,113 @@
 <app-navigation></app-navigation>
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">{{fishingProfile.description}}</h1>
-    <p class="lead">{{fishingProfile.adress}}</p>
-</div>
-<p>{{fishingProfile.instructorBio}}</p>
-<!-- <label class="image-upload-container btn btn-bwm">
-    <span>Select Image</span>
-    <input #imageInput
-           type="file"
-           accept="image/*"
-           (change)="processFile(imageInput)">
-</label> -->
+<div *ngIf="!(fishingProfile.id == 0)">
+  <button type="button" (click)="closeFishing()" class="btn btn-lg btn-block btn-outline-primary">Back</button>
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <h1 class="display-4">{{fishingProfile.description}}</h1>
+      <p class="lead">{{fishingProfile.adress}}</p>
+  </div>
+  <p>{{fishingProfile.instructorBio}}</p>
+  <!-- <label class="image-upload-container btn btn-bwm">
+      <span>Select Image</span>
+      <input #imageInput
+            type="file"
+            accept="image/*"
+            (change)="processFile(imageInput)">
+  </label> -->
 
-<div class="container row">
-    <div class="col-md-12">
-        <h1>Upload Image</h1>
-    </div>
-</div>
-<div class="container row">
-    <div class="col-md-6">
-        <input type="file" (change)="onFileChanged($event)">
-    </div>
-    <div class="col-md-6">
-        <input type="button" (click)="onUpload()" value="upload">
-    </div>
-</div>
-<hr />
-<div class="container row">
-    <div class="col-md-12">
-        <div *ngIf=message>{{message}}</div>
-    </div>
-</div>
-<div class="container row">
-   
-    <div class="col-md-6">
-        <input type="button" (click)="getImages()" value="Get Images">
-    </div>
-</div>
-<!-- <div class="container row">
-    <div class="col-md-12">
-        <div *ngIf=retrievedImages>
-            <img [src]="retrievedImages[0]" style="max-height: 100%; max-width: 100%">
-        </div>
-    </div>
-</div> -->
+  <div class="container row">
+      <div class="col-md-12">
+          <h1>Upload Image</h1>
+      </div>
+  </div>
+  <div class="container row">
+      <div class="col-md-6">
+          <input type="file" (change)="onFileChanged($event)">
+      </div>
+      <div class="col-md-6">
+          <input type="button" (click)="onUpload()" value="upload">
+      </div>
+  </div>
+  <hr />
+  <div class="container row">
+      <div class="col-md-12">
+          <div *ngIf=message>{{message}}</div>
+      </div>
+  </div>
+  <div class="container row">
+    
+      <div class="col-md-6">
+          <input type="button" (click)="getImages()" value="Get Images">
+      </div>
+  </div>
+  <!-- <div class="container row">
+      <div class="col-md-12">
+          <div *ngIf=retrievedImages>
+              <img [src]="retrievedImages[0]" style="max-height: 100%; max-width: 100%">
+          </div>
+      </div>
+  </div> -->
 
-<div class="slideshow-container" >
-    <div *ngFor="let image of retrievedImages; let i = index;" class="mySlides fade" >
-        
-            <div class="numbertext">{{i+1}} / {{retrievedImages.length}}</div>           
-            <img src={{image}} style="max-height:100%; max-width: 75%; display: block; margin-left: auto;
-            margin-right: auto;">      
-            <div class="text">Caption Text</div>
-                        
-    </div>
-    <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
-    <a class="next" (click)="plusSlides(1)">&#10095;</a>
-</div>
-<br>
+  <div class="slideshow-container" >
+      <div *ngFor="let image of retrievedImages; let i = index;" class="mySlides fade" >
+          
+              <div class="numbertext">{{i+1}} / {{retrievedImages.length}}</div>           
+              <img src={{image}} style="max-height:100%; max-width: 75%; display: block; margin-left: auto;
+              margin-right: auto;">      
+              <div class="text">Caption Text</div>
+                          
+      </div>
+      <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
+      <a class="next" (click)="plusSlides(1)">&#10095;</a>
+  </div>
+  <br>
 
-<!-- The dots/circles -->
-<div style="text-align:center">
-  <span *ngFor="let image of retrievedImages; let i = index" class="dot" (click)="currentSlide(i+1)"></span>
-  
-</div>
+  <!-- The dots/circles -->
+  <div style="text-align:center">
+    <span *ngFor="let image of retrievedImages; let i = index" class="dot" (click)="currentSlide(i+1)"></span>
+    
+  </div>
 
-<h3>Reservations:</h3>
+  <h3>Reservations:</h3>
 
-<table class="table">
-    <thead>
-      <tr>
-        <th><abbr >Start</abbr></th>
-        <th><abbr >End</abbr></th>
-        <th><abbr >Duration</abbr></th>
-        <th><abbr >Location</abbr></th>
-        <th><abbr >Price</abbr></th>
-        <th><abbr >Pts</abbr></th>
-      </tr>
-    </thead>
-    <tfoot>
+  <table class="table">
+      <thead>
         <tr>
-            <th><abbr >Start</abbr></th>
-            <th><abbr >End</abbr></th>
-            <th><abbr >Duration</abbr></th>
-            <th><abbr >Location</abbr></th>
-            <th><abbr >Price</abbr></th>
-            <th><abbr >Pts</abbr></th>
-          </tr>
-    </tfoot>
-    <tbody *ngFor = "let res of fishingReservations">
-        <tr>
-            <td>{{formatDate(res.start)}}</td>
-            <td>{{formatDate(res.end)}}</td>
-            <td>{{res.duration}}min</td>
-            <td>{{res.location}}</td>
-            <td>{{res.price}}eur</td>
-            <td>3</td>
+          <th><abbr >Start</abbr></th>
+          <th><abbr >End</abbr></th>
+          <th><abbr >Duration</abbr></th>
+          <th><abbr >Location</abbr></th>
+          <th><abbr >Price</abbr></th>
+          <th><abbr >Pts</abbr></th>
         </tr>
-    </tbody>
-</table>
-<p>
+      </thead>
+      <tfoot>
+          <tr>
+              <th><abbr >Start</abbr></th>
+              <th><abbr >End</abbr></th>
+              <th><abbr >Duration</abbr></th>
+              <th><abbr >Location</abbr></th>
+              <th><abbr >Price</abbr></th>
+              <th><abbr >Pts</abbr></th>
+            </tr>
+      </tfoot>
+      <tbody *ngFor = "let res of fishingReservations">
+          <tr>
+              <td>{{formatDate(res.start)}}</td>
+              <td>{{formatDate(res.end)}}</td>
+              <td>{{res.duration}}min</td>
+              <td>{{res.location}}</td>
+              <td>{{res.price}}eur</td>
+              <td>3</td>
+          </tr>
+      </tbody>
+  </table>
+  <p>
     <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
             [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
       ADD NEW
     </button>
   </p>
+  <h3>Available Reservations:</h3>
   <div id="collapseExample" *ngIf ="isCollapsed">
     <div class="card">
       <div class="card-body">
@@ -156,85 +159,141 @@
     </div>
   </div>
 
-<table class="table">
-    <thead>
-      <tr>
-        <th><abbr >Start</abbr></th>
-        <th><abbr >End</abbr></th>
-        <th><abbr >Duration</abbr></th>
-        <th><abbr >Location</abbr></th>
-        <th><abbr >Price</abbr></th>
-        <th><abbr >Pts</abbr></th>
-      </tr>
-    </thead>
-    <tfoot>
+  <table class="table">
+      <thead>
         <tr>
-            <th><abbr >Start</abbr></th>
-            <th><abbr >End</abbr></th>
-            <th><abbr >Duration</abbr></th>
-            <th><abbr >Location</abbr></th>
-            <th><abbr >Price</abbr></th>
-            <th><abbr >Pts</abbr></th>
-          </tr>
-    </tfoot>
-    <tbody *ngFor = "let resA of availableReservations">
-        <tr>
-            <td>{{formatDate(resA.start)}}</td>
-            <td>{{formatDate(resA.end)}}</td>
-            <td>{{resA.duration}}min</td>
-            <td>{{resA.location}}</td>
-            <td>{{resA.price}}eur</td>
-            <td>3</td>
+          <th><abbr >Start</abbr></th>
+          <th><abbr >End</abbr></th>
+          <th><abbr >Duration</abbr></th>
+          <th><abbr >Location</abbr></th>
+          <th><abbr >Price</abbr></th>
+          <th><abbr >Pts</abbr></th>
         </tr>
-    </tbody>
-</table>
+      </thead>
+      <tfoot>
+          <tr>
+              <th><abbr >Start</abbr></th>
+              <th><abbr >End</abbr></th>
+              <th><abbr >Duration</abbr></th>
+              <th><abbr >Location</abbr></th>
+              <th><abbr >Price</abbr></th>
+              <th><abbr >Pts</abbr></th>
+            </tr>
+      </tfoot>
+      <tbody *ngFor = "let resA of availableReservations">
+          <tr>
+              <td>{{formatDate(resA.start)}}</td>
+              <td>{{formatDate(resA.end)}}</td>
+              <td>{{resA.duration}}min</td>
+              <td>{{resA.location}}</td>
+              <td>{{resA.price}}eur</td>
+              <td>3</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
 
 
-<div class="container">
-    <div class="card-deck mb-3 text-center">
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Free</h4>
-            </div>
-            <div class="card-body">
-                <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>10 users included</li>
-                    <li>2 GB of storage</li>
-                    <li>Email support</li>
-                    <li>Help center access</li>
-                </ul>
-                <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
-            </div>
-        </div>
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Pro</h4>
-            </div>
-            <div class="card-body">
-                <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>20 users included</li>
-                    <li>10 GB of storage</li>
-                    <li>Priority email support</li>
-                    <li>Help center access</li>
-                </ul>
-                <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
-            </div>
-        </div>
-        <div class="card mb-4 shadow-sm">
-        <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Enterprise</h4>
-        </div>
-        <div class="card-body">
-            <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
-            <ul class="list-unstyled mt-3 mb-4">
-                <li>30 users included</li>
-                <li>15 GB of storage</li>
-                <li>Phone and email support</li>
-                <li>Help center access</li>
-            </ul>
-            <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
-        </div>
+<h2 *ngIf="fishingProfile.id == 0">Your Adventures: ({{fishingProfiles.length}})</h2>
+<div *ngIf="fishingProfile.id == 0">
+  
+  
+  <div class="input-group" style="float:right;">
+    <button  type="button" class="btn btn-outline-primary" (click)="isCollapsed1 = !isCollapsed1"
+          [attr.aria-expanded]="!isCollapsed1" aria-controls="collapseExample">
+    ADD NEW
+    </button>
+    <div style="width:50px"></div>
+    <div class="form-outline">
+      <input type="search" id="form1" class="form-control" [(ngModel)]="query" />
     </div>
+    <button type="button" (click)="searchFishing()" class="btn btn-primary">
+      Search
+    </button>
+    <button type="button" (click)="GetFishingProfiles()" class="btn btn-secondary">
+      Reset
+    </button>
+  </div>
+  
+</div>
+<div *ngIf="(fishingProfile.id == 0) && isCollapsed1" id="collapseExample" >
+  <div class="card">
+    <div class="card-body">
+      <div class="center">
+          <h3>Add new adventure: </h3>
+        </div>
+        <mat-grid-list cols="1" rowHeight="700px">
+          <mat-grid-tile>
+              <div class="example-container" >
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Adress</mat-label>
+                  <input type="text" matInput [(ngModel)]="newFishing.adress">
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Description</mat-label>
+                  <input type="text"  matInput [(ngModel)]="newFishing.description">
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Instructor Bio</mat-label>
+                  <input type="text" matInput [(ngModel)]="newFishing.instructorBio"  placeholder="Narodnog Fronta 13, Novi Sad" >
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Max Cap</mat-label>
+                  <input type="number" matInput [(ngModel)]="newFishing.maxCap">
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Rules</mat-label>
+                  <input type="text" matInput [(ngModel)]="newFishing.rules">
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Equipment</mat-label>
+                  <input type="text" matInput [(ngModel)]="newFishing.equipment">
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Menu</mat-label>
+                  <input type="text" matInput [(ngModel)]="newFishing.menu">
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Cancel Conditions</mat-label>
+                  <input type="text" matInput [(ngModel)]="newFishing.cancelConditions">
+                </mat-form-field>
+                <br>
+                <mat-card-actions>
+                  <button  mat-raised-button (click)="addNewFishing()" color="primary">ADD</button>
+                </mat-card-actions>
+                <br>
+                <br><br>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+  </div>
+</div> 
+<div *ngIf="fishingProfile.id == 0" class="container">
+  <div class="card-deck mb-3 text-center">
+    <div class="card mb-4 shadow-sm" *ngFor="let fishing of fishingProfiles">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">{{fishing.description}}</h4>
+        
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title">{{fishing.maxCap}}<small class="text-muted">  person</small></h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>{{fishing.instructorBio}}</li>
+          <li>{{fishing.adress}}</li>
+        </ul>
+        <button type="button" (click)="openFishing(fishing)" class="btn btn-lg btn-block btn-outline-primary">Open</button>
+      </div>
+      <div>
+        <button type="button" id="buttonCorner" (click)="deleteFishing(fishing.id)" class="btn btn-secondary">Delete</button>
+      </div>
+    </div>    
+  </div>
 </div>

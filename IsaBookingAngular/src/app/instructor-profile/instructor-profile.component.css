@@ -96,3 +96,9 @@
   from {opacity: .4}
   to {opacity: 1}
 }
+
+#buttonCorner {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

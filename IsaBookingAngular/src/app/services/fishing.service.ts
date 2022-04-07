@@ -53,6 +53,31 @@ export class FishingService {
       let headers = new HttpHeaders({
         'Content-Type': 'application/json' });
       let options = { headers: headers };
-      return this.http.post<any>("http://localhost:8081/api/fishingReservations/fishingClassReservations", body, options).subscribe();
+      return this.http.post<any>("http://localhost:8081/api/fishingReservations/fishingClassReservations", body, options);
     }
+
+    public AddNewFishing(fishing: Fishing){
+      const body = {
+        id: fishing.id,
+        userId : fishing.userId,
+        adress : fishing.adress,
+        cancelConditions: fishing.cancelConditions,
+        description : fishing.description,
+        equipment: fishing.equipment,
+        maxCap : fishing.maxCap,
+        instructorBio : fishing.instructorBio,
+        menu : fishing.menu,
+        rules : fishing.rules
+      };
+      console.log(body);
+      let headers = new HttpHeaders({
+        'Content-Type': 'application/json' });
+      let options = { headers: headers };
+      return this.http.post<any>("http://localhost:8081/api/fishing/classes", body, options);
+    }
+
+    public DeleteFishing(id: number){
+      return this.http.delete<any>("http://localhost:8081/api/fishing/classes/" + id);
+    }
+  
 }

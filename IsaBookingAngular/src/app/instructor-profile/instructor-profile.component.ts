@@ -14,6 +14,8 @@ import { FishingReservation } from '../models/fishing-reservation';
 })
 export class InstructorProfileComponent implements OnInit {
   fishingProfile: Fishing;
+  fishingProfiles: Fishing[];
+  backupProfiles: Fishing[];
   fishingImages: FishingImage[];
   fishingReservations: FishingReservation[];
   availableReservations: FishingReservation[];
@@ -24,14 +26,19 @@ export class InstructorProfileComponent implements OnInit {
   retrieveResonse: any;
   message: string;
   imageName: any;
+  query: string;
   public isCollapsed = false;
+  public isCollapsed1 = false;
   @Input() public newAvailableReservation: FishingReservation;
+  @Input() public newFishing: Fishing;
 
   constructor(private fishingService: FishingService,
               private authenticationService: AuthenticationService,
               private httpClient: HttpClient
               ) {
     this.fishingProfile = new Fishing;
+    this.fishingProfiles = [];
+    this.backupProfiles = [];
     this.fishingImages = [];
     this.fishingReservations = [];
     this.availableReservations = [];
@@ -39,15 +46,19 @@ export class InstructorProfileComponent implements OnInit {
     this.message = "";
     this.selectedFile = new File([""], "filename");
     this.slideIndex = 1;
+    this.query = "";
     this.newAvailableReservation = new FishingReservation();
-    this.GetFishingProfile();
+    this.newFishing = new Fishing();
+    //this.GetFishingProfile();
+    this.GetFishingProfiles();
     this.GetFishingProfileGallery();
     this.GetFishingProfileReservations();
     this.getImages();
    }
 
   ngOnInit(): void {
-    this.GetFishingProfile();
+    //this.GetFishingProfile();
+    this.GetFishingProfiles();
     this.GetFishingProfileGallery();
     this.GetFishingProfileReservations();
     this.getImages();
@@ -55,6 +66,7 @@ export class InstructorProfileComponent implements OnInit {
     console.log("ODRADIO", this.fishingProfile.adress)
   }
 
+  //needs to be changed
   GetFishingProfile(){
     this.fishingService.GetFishingProfiles()
       .subscribe((data: any) => {
@@ -63,6 +75,20 @@ export class InstructorProfileComponent implements OnInit {
             this.fishingProfile = d;
           }
       }
+    })
+  }
+  GetFishingProfiles(){
+    
+    this.fishingService.GetFishingProfiles()
+      .subscribe((data: any) => {
+        this.fishingProfiles.length = 0;
+        this.backupProfiles.length = 0;
+        for(const d of (data as any)){
+          if(this.authenticationService.currentUserValue.id == d.userId){          
+            this.fishingProfiles.push(d);
+            this.backupProfiles.push(d); 
+          }         
+        }
     })
   }
   GetFishingProfileGallery(){
@@ -140,6 +166,7 @@ export class InstructorProfileComponent implements OnInit {
         this.getImages();
       }
       );
+      this.getImages();
   }
     //Gets called when the user clicks on retieve image button to get the image from back end
     getImages() {
@@ -213,8 +240,17 @@ public addAvailableReservation(){
   this.newAvailableReservation.userId = 0;
   this.newAvailableReservation.duration = (new Date(this.newAvailableReservation.end).getTime() - new Date(this.newAvailableReservation.start).getTime()) / (1000 * 60);
   console.log(this.newAvailableReservation);
-  this.fishingService.AddAvailableReservation(this.newAvailableReservation)
+  this.fishingService.AddAvailableReservation(this.newAvailableReservation).subscribe((data:any) => {
+    this.GetFishingProfileReservations();
+  });
 
+}
+
+public addNewFishing(){
+  this.newFishing.userId = this.fishingProfiles[0].userId;
+  this.fishingService.AddNewFishing(this.newFishing).subscribe((data:any) => {
+    this.GetFishingProfiles();
+  });
 }
 
 validate() : boolean{
@@ -226,4 +262,29 @@ validate() : boolean{
   else 
     return true;
 }
+
+openFishing(fishing: Fishing){
+  this.fishingProfile = fishing;
+  this.GetFishingProfileReservations();
+  this.getImages();
+}
+
+closeFishing(){
+  this.fishingProfile = new Fishing();
+  //this.GetFishingProfileReservations();
+}
+
+deleteFishing(fishing: number){
+  this.fishingProfiles.filter(el => el.id != fishing);
+  this.fishingService.DeleteFishing(fishing).subscribe((data: any) => {
+    this.GetFishingProfiles();
+  }); 
+}
+
+searchFishing(){
+  this.fishingProfiles = JSON.parse(JSON.stringify(this.backupProfiles));
+  this.fishingProfiles = this.fishingProfiles.filter(el => (el.adress.toUpperCase().includes(this.query.toUpperCase()) || el.description.toUpperCase().includes(this.query.toUpperCase())));
+
+}
+
 }
