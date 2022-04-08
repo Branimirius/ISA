@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.FishingClassDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.FishingClass;
+import rs.ac.uns.ftn.informatika.jpa.model.FishingClassReservation;
+import rs.ac.uns.ftn.informatika.jpa.service.FishingClassReservationService;
 import rs.ac.uns.ftn.informatika.jpa.service.FishingClassService;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -27,6 +29,8 @@ import rs.ac.uns.ftn.informatika.jpa.service.FishingClassService;
 public class FishingClassController {
 	@Autowired
 	private FishingClassService fishingClassService;
+	@Autowired
+	private FishingClassReservationService fishingClassReservationService;
 	
 	//get fishingClasss
 	@GetMapping(value = "/classes")
@@ -90,10 +94,15 @@ public class FishingClassController {
 	//delete fishingClass
 	@DeleteMapping(value = "/classes/{id}")
 	public Map<String, Boolean> deleteFishingClass(@PathVariable(value = "id") long fishingClassId) {	
-		this.fishingClassService.remove(fishingClassId);
 		Map<String, Boolean> response = new HashMap<>();
-		response.put("deleted", Boolean.TRUE);
-		
+		for(FishingClassReservation res : this.fishingClassReservationService.findAll()) {
+			if((res.getFishingClass().getId() == fishingClassId) && (res.getUserId() != 0)) {
+				response.put("deleted", Boolean.FALSE);
+				return response;
+			}
+		}
+		this.fishingClassService.remove(fishingClassId);		
+		response.put("deleted", Boolean.TRUE);		
 		return response;
 	}
 	

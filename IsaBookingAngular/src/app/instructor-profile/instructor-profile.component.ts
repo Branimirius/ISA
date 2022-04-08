@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { FishingImage } from '../models/fishing-image';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { FishingReservation } from '../models/fishing-reservation';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-instructor-profile',
@@ -13,6 +14,7 @@ import { FishingReservation } from '../models/fishing-reservation';
   styleUrls: ['./instructor-profile.component.css']
 })
 export class InstructorProfileComponent implements OnInit {
+  instructor: User;
   fishingProfile: Fishing;
   fishingProfiles: Fishing[];
   backupProfiles: Fishing[];
@@ -31,11 +33,14 @@ export class InstructorProfileComponent implements OnInit {
   public isCollapsed1 = false;
   @Input() public newAvailableReservation: FishingReservation;
   @Input() public newFishing: Fishing;
+  @Input() public updateInstructor: User;
 
   constructor(private fishingService: FishingService,
               private authenticationService: AuthenticationService,
               private httpClient: HttpClient
               ) {
+    this.instructor = this.authenticationService.currentUserValue;
+    this.updateInstructor = this.authenticationService.currentUserValue;
     this.fishingProfile = new Fishing;
     this.fishingProfiles = [];
     this.backupProfiles = [];
@@ -49,6 +54,7 @@ export class InstructorProfileComponent implements OnInit {
     this.query = "";
     this.newAvailableReservation = new FishingReservation();
     this.newFishing = new Fishing();
+    
     //this.GetFishingProfile();
     this.GetFishingProfiles();
     this.GetFishingProfileGallery();
@@ -275,9 +281,17 @@ closeFishing(){
 }
 
 deleteFishing(fishing: number){
-  this.fishingProfiles.filter(el => el.id != fishing);
+  
   this.fishingService.DeleteFishing(fishing).subscribe((data: any) => {
-    this.GetFishingProfiles();
+    if(data.deleted == true){
+      this.fishingProfiles.filter(el => el.id != fishing);
+      this.GetFishingProfiles();
+    }
+    else{
+      alert("You can't delete reserved fishing adventure.");
+    }
+    
+    
   }); 
 }
 

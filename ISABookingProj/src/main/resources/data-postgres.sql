@@ -11,3 +11,6 @@ insert into fishing_class (user_id, adress, description, instructor_bio, max_cap
 
 insert into fishing_class_reservations (user_id, start, end_time, duration, location, max_cap, extra_offers, price, class_id) values (1, TO_TIMESTAMP('2022-02-09 07:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2022-02-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 60, 'Narodnog Fronta 14, Novi Sad', 5, 'Imamo i camac', 100, 1 );
 insert into fishing_class_reservations (user_id, start, end_time, duration, location, max_cap, extra_offers, price, class_id) values (0, TO_TIMESTAMP('2022-02-09 07:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2022-02-10 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 60, 'Narodnog Fronta 14, Novi Sad', 5, 'Imamo i camac', 100, 1 );
+
+insert into instructor_availabilities (user_id, start, end_time) values (2, TO_TIMESTAMP('2022-05-09 07:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2022-05-10 15:00:00', 'YYYY-MM-DD HH24:MI:SS'));
+insert into instructor_availabilities (user_id, start, end_time) values (2, TO_TIMESTAMP('2022-04-09 07:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2022-04-10 15:00:00', 'YYYY-MM-DD HH24:MI:SS'));

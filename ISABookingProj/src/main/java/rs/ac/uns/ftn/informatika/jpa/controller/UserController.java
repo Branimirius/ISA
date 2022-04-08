@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.ftn.informatika.jpa.dto.InstructorAvailabilityDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.UserDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.UserLoginDTO;
+import rs.ac.uns.ftn.informatika.jpa.model.InstructorAvailability;
 import rs.ac.uns.ftn.informatika.jpa.model.User;
+import rs.ac.uns.ftn.informatika.jpa.service.InstructorAvailabilityService;
 import rs.ac.uns.ftn.informatika.jpa.service.UserService;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -28,6 +31,8 @@ import rs.ac.uns.ftn.informatika.jpa.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private InstructorAvailabilityService availabilityService;
 	
 	//get users
 	@GetMapping(value = "/users")
@@ -104,6 +109,17 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 		}
 		//return ResponseEntity.ok().body(user);
+	}
+	@PostMapping(value = "/availabilities", consumes = "application/json")
+	public ResponseEntity<InstructorAvailabilityDTO> saveInstructorAvailability(@RequestBody InstructorAvailabilityDTO availabilityDTO) {
+
+		InstructorAvailability availability = new InstructorAvailability();
+		availability.setStart(availabilityDTO.getStart());
+		availability.setEndTime(availabilityDTO.getEndTime());
+		availability.setUserId(availabilityDTO.getUserId());
+		
+		availability = availabilityService.save(availability);
+		return new ResponseEntity<>(new InstructorAvailabilityDTO(availability), HttpStatus.CREATED);
 	}
 
 }
