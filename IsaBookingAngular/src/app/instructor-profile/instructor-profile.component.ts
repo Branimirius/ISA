@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Fishing } from '../models/fishing';
 import { FishingService } from '../services/fishing.service'
 import { AuthenticationService } from '../services/authentication.service';
@@ -7,6 +7,8 @@ import { FishingImage } from '../models/fishing-image';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { FishingReservation } from '../models/fishing-reservation';
 import { User } from '../models/user';
+import { UserService } from '../services/user.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-instructor-profile',
@@ -20,6 +22,7 @@ export class InstructorProfileComponent implements OnInit {
   backupProfiles: Fishing[];
   fishingImages: FishingImage[];
   fishingReservations: FishingReservation[];
+  allFishingReservations: FishingReservation[];
   availableReservations: FishingReservation[];
   selectedFile: File;
   retrievedImages: any[];
@@ -29,15 +32,22 @@ export class InstructorProfileComponent implements OnInit {
   message: string;
   imageName: any;
   query: string;
+  currPass: string;
+  newPass: string;
+  confPass: string;
+
   public isCollapsed = false;
   public isCollapsed1 = false;
   @Input() public newAvailableReservation: FishingReservation;
   @Input() public newFishing: Fishing;
   @Input() public updateInstructor: User;
-
+  @ViewChild('secondDialog', { static: true })
+  secondDialog!: TemplateRef<any>;
   constructor(private fishingService: FishingService,
               private authenticationService: AuthenticationService,
-              private httpClient: HttpClient
+              private httpClient: HttpClient,
+              private userService: UserService,
+              private dialog: MatDialog
               ) {
     this.instructor = this.authenticationService.currentUserValue;
     this.updateInstructor = this.authenticationService.currentUserValue;
@@ -47,6 +57,7 @@ export class InstructorProfileComponent implements OnInit {
     this.fishingImages = [];
     this.fishingReservations = [];
     this.availableReservations = [];
+    this.allFishingReservations = [];
     this.retrievedImages = [];
     this.message = "";
     this.selectedFile = new File([""], "filename");
@@ -54,6 +65,9 @@ export class InstructorProfileComponent implements OnInit {
     this.query = "";
     this.newAvailableReservation = new FishingReservation();
     this.newFishing = new Fishing();
+    this.currPass = "";
+    this.newPass = "";
+    this.confPass = "";
     
     //this.GetFishingProfile();
     this.GetFishingProfiles();
@@ -116,7 +130,11 @@ export class InstructorProfileComponent implements OnInit {
     .subscribe((data: any) => {
       this.fishingReservations.length = 0;
       this.availableReservations.length = 0;
+      this.allFishingReservations.length = 0;
       for(const d of (data as any)){
+        if(this.instructor.id == d.fishingClass.userId){
+          this.allFishingReservations.push(d);
+        }
         if(this.fishingProfile.id == d.fishingClass.id){
           if(d.userId != 0){
             console.log(d)
@@ -300,5 +318,37 @@ searchFishing(){
   this.fishingProfiles = this.fishingProfiles.filter(el => (el.adress.toUpperCase().includes(this.query.toUpperCase()) || el.description.toUpperCase().includes(this.query.toUpperCase())));
 
 }
+
+updateInstructorProfile(){
+  if(this.currPass == "" && this.newPass == "" && this.confPass == ""){
+    this.userService.UpdateUser(this.updateInstructor).subscribe((data: any) => {
+      this.instructor = this.updateInstructor;  
+      alert("Successfuly updated.");  
+    }); 
+  }
+  else{
+    if(this.currPass == this.instructor.password && this.newPass == this.confPass){
+      this.updateInstructor.password = this.newPass;
+      this.userService.UpdateUser(this.updateInstructor).subscribe((data: any) => {
+        this.instructor = this.updateInstructor;
+        alert("Successfuly updated.");  
+      });
+    }
+    else{
+      alert("Your current password or confirm password is wrong. Try again or leave empty.")
+    }
+  }
+}
+
+isDone(end: Date): boolean{
+  if((Date.now() - new Date(end).getTime()) > 0){
+    return true;
+  }
+  return false;
+}
+openDialogWithoutRef() {
+  this.dialog.open(this.secondDialog);
+}
+
 
 }
