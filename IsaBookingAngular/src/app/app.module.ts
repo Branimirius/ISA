@@ -10,7 +10,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatBadgeModule } from '@angular/material/badge';
 import { ToastrModule } from 'ngx-toastr';
 import { timeout } from 'rxjs/operators';
@@ -22,6 +22,8 @@ import { HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { InstructorProfileComponent } from './instructor-profile/instructor-profile.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import { MatInputModule } from '@angular/material/input';
+import { InstructorCalendarComponent } from './instructor-calendar/instructor-calendar.component';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { AdminProfileComponent } from './admin-profile/admin-profile.component';
     LandingPageComponent,
     LoginComponent,
     InstructorProfileComponent,
-    AdminProfileComponent
+    AdminProfileComponent,
+    InstructorCalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ import { AdminProfileComponent } from './admin-profile/admin-profile.component';
     ReactiveFormsModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    MatInputModule,
     MatBadgeModule,
     ToastrModule.forRoot({
       preventDuplicates: false,

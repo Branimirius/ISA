@@ -7,6 +7,8 @@ import { environment } from 'src/environments/environment';
 import { Fishing } from '../models/fishing';
 import { FishingImage } from '../models/fishing-image';
 import { FishingReservation } from '../models/fishing-reservation';
+import { FishingReview } from '../models/fishing-review';
+import { Availability } from '../models/availability';
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +38,7 @@ export class FishingService {
       return this.http.post('/api/v1/image-upload', formData);
     }
     
-    public AddAvailableReservation(res: FishingReservation){
+    public AddReservation(res: FishingReservation){
       const body = {
         id: res.id,
         userId : res.userId,
@@ -79,5 +81,23 @@ export class FishingService {
     public DeleteFishing(id: number){
       return this.http.delete<any>("http://localhost:8081/api/fishing/classes/" + id);
     }
+
+    public AddFishingReview(review: FishingReview){
+      const body = {
+        id: review.id,
+        client: review.client,
+        instructor: review.instructor,
+        comment: review.comment,
+        report: review.report,
+        showUp: review.showUp
+      };
+      console.log(body);
+      let headers = new HttpHeaders({
+        'Content-Type': 'application/json' });
+      let options = { headers: headers };
+      return this.http.post<any>("http://localhost:8081/api/fishingReservations/fishingClassReviews", body, options);
+    }
+
+    
   
 }

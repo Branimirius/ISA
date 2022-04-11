@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.FishingClassReservationDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.FishingReviewDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.FishingClass;
 import rs.ac.uns.ftn.informatika.jpa.model.FishingClassReservation;
+import rs.ac.uns.ftn.informatika.jpa.model.FishingReview;
+import rs.ac.uns.ftn.informatika.jpa.model.User;
 import rs.ac.uns.ftn.informatika.jpa.service.FishingClassReservationService;
+import rs.ac.uns.ftn.informatika.jpa.service.FishingReviewService;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -28,6 +32,8 @@ import rs.ac.uns.ftn.informatika.jpa.service.FishingClassReservationService;
 public class FishingClassReservationController {
 	@Autowired
 	private FishingClassReservationService fishingClassReservationService;
+	@Autowired
+	private FishingReviewService fishingReviewService;
 	
 	//get fishingClassReservations
 	@GetMapping(value = "/fishingClassReservations")
@@ -63,6 +69,21 @@ public class FishingClassReservationController {
 		
 		fishingClassReservation = fishingClassReservationService.save(fishingClassReservation);
 		return new ResponseEntity<>(new FishingClassReservationDTO(fishingClassReservation), HttpStatus.CREATED);
+	}
+	
+	@PostMapping(value = "/fishingClassReviews", consumes = "application/json")
+	public ResponseEntity<FishingReviewDTO> saveFishingClassReview(@RequestBody FishingReviewDTO fishingReviewDTO) {
+		System.out.println("DODAVANJE IZVESTAJA: " + fishingReviewDTO.getComment());
+		FishingReview fishingReview = new FishingReview();
+		fishingReview.setId(fishingReviewDTO.getId());
+		fishingReview.setClient(new User(fishingReviewDTO.getClient()));
+		fishingReview.setInstructor(new User(fishingReviewDTO.getInstructor()));
+		fishingReview.setComment(fishingReviewDTO.getComment());
+		fishingReview.setReport(fishingReviewDTO.isReport());
+		fishingReview.setShowUp(fishingReviewDTO.isShowUp());
+		
+		fishingReview = fishingReviewService.save(fishingReview);
+		return new ResponseEntity<>(new FishingReviewDTO(fishingReview), HttpStatus.CREATED);
 	}
 	
 	//update fishingClassReservation

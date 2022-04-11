@@ -3,6 +3,9 @@ package rs.ac.uns.ftn.informatika.jpa.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import rs.ac.uns.ftn.informatika.jpa.dto.UserDTO;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,6 +67,11 @@ public class User {
 		this.city = city;
 		this.regType = regType;
 		this.active = active;
+	}
+	
+	public User(UserDTO dto) {
+		this(dto.getId(), dto.getFirstName(), dto.getLastName(), dto.geteMail(), dto.getPassword(), dto.getPhoneNumber(), dto.getAdress(), 
+				dto.getCountry(), dto.getCity(), dto.getRegType(), dto.isActive());
 	}
 
 

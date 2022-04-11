@@ -121,32 +121,32 @@
                     <div class="example-container" >
                       <mat-form-field appearance="fill" class="width-200">
                         <mat-label>Start</mat-label>
-                        <input type="datetime-local" matInput [(ngModel)]="newAvailableReservation.start">
+                        <input type="datetime-local" matInput [(ngModel)]="newReservation.start">
                       </mat-form-field>
                       <br>
                       <mat-form-field appearance="fill" class="width-200">
                         <mat-label>End</mat-label>
-                        <input type="datetime-local"  matInput [(ngModel)]="newAvailableReservation.end">
+                        <input type="datetime-local"  matInput [(ngModel)]="newReservation.end">
                       </mat-form-field>
                       <br>
                       <mat-form-field appearance="fill" class="width-200">
                         <mat-label>Location</mat-label>
-                        <input type="text" matInput [(ngModel)]="newAvailableReservation.location"  placeholder="Narodnog Fronta 13, Novi Sad" >
+                        <input type="text" matInput [(ngModel)]="newReservation.location"  placeholder="Narodnog Fronta 13, Novi Sad" >
                       </mat-form-field>
                       <br>
                       <mat-form-field appearance="fill" class="width-200">
                         <mat-label>Extra offers</mat-label>
-                        <input type="text" matInput [(ngModel)]="newAvailableReservation.extraOffers">
+                        <input type="text" matInput [(ngModel)]="newReservation.extraOffers">
                       </mat-form-field>
                       <br>
                       <mat-form-field appearance="fill" class="width-200">
                         <mat-label>Max cap</mat-label>
-                        <input type="number" matInput [(ngModel)]="newAvailableReservation.maxCap">
+                        <input type="number" matInput [(ngModel)]="newReservation.maxCap">
                       </mat-form-field>
                       <br>
                       <mat-form-field appearance="fill" class="width-200">
                         <mat-label>Price (eur)</mat-label>
-                        <input type="number" matInput [(ngModel)]="newAvailableReservation.price">
+                        <input type="number" matInput [(ngModel)]="newReservation.price">
                       </mat-form-field>
                       <br>
                       <mat-card-actions>
@@ -421,17 +421,13 @@
                             </div>
                           </div>
                         </form>
-      
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-      
-            
-          </div>
-      
+          </div>    
         </div>
       </div>
     </div>
@@ -448,12 +444,14 @@
                     <div class="card-title">
                       <h6 class="mr-2"><span>Reservations</span></h6>
                     </div>
+                    <div class="card-title">
+                      <a class="nav-link" routerLink='/instructorCalendar'> Open Calendar </a>
+                    </div>
                     <div class="e-table" >
                       <div class="table-responsive table-lg mt-3">
                         <table class="table table-bordered">
                           <thead>
-                            <tr>
-                              <th class="align-top"></th>
+                            <tr>                             
                               <th>User</th>
                               <th >Start</th>
                               <th >End</th>
@@ -463,22 +461,22 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr *ngFor="let r of allFishingReservations">
-                              <td class="align-middle">
-                                <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                  <i class="fas fa-check-circle"></i>
+                            <tr *ngFor="let r of allFishingReservations">                             
+                              <td class="text-center align-middle">
+                                <div  class="btn-group align-top">
+                                  <button *ngIf="r.userId != 0" class="btn btn-sm btn-outline-secondary badge" type="button" (click)="openDialogWithoutRef(r.userId, true)">{{getClient(r.userId).eMail}}</button>
+                                  <span *ngIf="r.userId == 0">Unreserved</span>
                                 </div>
                               </td>
-                              <td class="align-middle text-center">{{r.fishingClass.userId}}</td>
                               <td class="text-nowrap align-middle">{{formatDate(r.start)}}</td>
                               <td class="text-nowrap align-middle"><span>{{formatDate(r.end)}}</span></td>
                               <td class="text-center align-middle">{{r.duration}}min</td>
                               <td class="align-middle text-center">{{r.location}}</td>
 
                               <td class="text-center align-middle">
-                                <div *ngIf="isDone(r.end)" class="btn-group align-top">
-                                    <button class="btn btn-sm btn-outline-secondary badge" type="button" (click)="openDialogWithoutRef()" data-toggle="modal" data-target="#user-form-modal">Review</button>
-                                    <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
+                                <div  class="btn-group align-top">
+                                    <button *ngIf="isDoneAndNotEmpty(r)" class="btn btn-sm btn-outline-secondary badge" type="button" (click)="openDialogWithoutRef(r.userId, false)" data-toggle="modal" data-target="#user-form-modal">Review</button>
+                                    <button *ngIf="isDone(r.end)" class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
                                 </div>
                               </td>
                             </tr>
@@ -504,25 +502,81 @@
               <div class="col-12 col-lg-3 mb-3">
                 <div class="card">
                   <div class="card-body">
-                    <div class="text-center px-xl-3">
-                      <button class="btn btn-success btn-block" type="button" data-toggle="modal" data-target="#user-form-modal">New User</button>
-                    </div>
-                    <hr class="my-3">
-                    <div class="e-navlist e-navlist--active-bold">
-                      
-                    </div>
-                    <hr class="my-3">
+                    
                     <div>
                       <div class="form-group">
-                        <label>Date from - to:</label>
+                        <label>Time from:</label>
                         <div>
-                          <input id="dates-range" class="form-control flatpickr-input" placeholder="01 Dec 17 - 27 Jan 18" type="text" readonly="readonly">
+                          <input type="datetime-local"  matInput [(ngModel)]="newAvailability.from">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label>Search by Name:</label>
-                        <div><input class="form-control w-100" type="text" placeholder="Name" value=""></div>
+                        <label>Time to:</label>
+                        <div>
+                          <input type="datetime-local"  matInput [(ngModel)]="newAvailability.to">
+                        </div>
                       </div>
+                    </div>
+                    <hr class="my-3">
+                    <div class="text-center px-xl-3">
+                      <button class="btn btn-success btn-block" type="button" (click)="addAvailability()">Add Availability</button>
+                    </div>
+                    <hr class="my-3">
+                    <hr class="my-3">
+                    <div class="text-center px-xl-3">
+                      <h3 >Add Reservation:</h3>
+                    </div>
+                    <div class="e-navlist e-navlist--active-bold">
+                      <mat-form-field appearance="fill" class="width-200">
+                        <mat-label>Client</mat-label>
+                        <mat-select  name="ampm" class="ampm" [(ngModel)]="newReservation.userId">
+                          <mat-option *ngFor="let client of allClients" [value]="client.id">{{client.eMail}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="e-navlist e-navlist--active-bold">
+                      <mat-form-field appearance="fill" class="width-200">
+                        <mat-label>Fishing Adventure</mat-label>
+                        <mat-select  name="ampm" class="ampm" [(ngModel)]="newReservation.fishingClass">
+                          <mat-option *ngFor="let fish of fishingProfiles" [value]="fish">{{fish.description}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="e-navlist e-navlist--active-bold">
+                      <mat-form-field appearance="fill" class="width-200">
+                        <mat-label>Start</mat-label>
+                        <input type="datetime-local" matInput [(ngModel)]="newReservation.start">
+                      </mat-form-field>
+                      <br>
+                      <mat-form-field appearance="fill" class="width-200">
+                        <mat-label>End</mat-label>
+                        <input type="datetime-local"  matInput [(ngModel)]="newReservation.end">
+                      </mat-form-field>
+                      <br>
+                      <mat-form-field appearance="fill" class="width-200">
+                        <mat-label>Location</mat-label>
+                        <input type="text" matInput [(ngModel)]="newReservation.location"  placeholder="Narodnog Fronta 13, Novi Sad" >
+                      </mat-form-field>
+                      <br>
+                      <mat-form-field appearance="fill" class="width-200">
+                        <mat-label>Extra offers</mat-label>
+                        <input type="text" matInput [(ngModel)]="newReservation.extraOffers">
+                      </mat-form-field>
+                      <br>
+                      <mat-form-field appearance="fill" class="width-200">
+                        <mat-label>Max cap</mat-label>
+                        <input type="number" matInput [(ngModel)]="newReservation.maxCap">
+                      </mat-form-field>
+                      <br>
+                      <mat-form-field appearance="fill" class="width-200">
+                        <mat-label>Price (eur)</mat-label>
+                        <input type="number" matInput [(ngModel)]="newReservation.price">
+                      </mat-form-field>
+                      <br>
+                      <mat-card-actions>
+                        <button  mat-raised-button (click)="addReservation()" color="primary">ADD</button>
+                      </mat-card-actions>
+                      <br>
                     </div>
                   </div>
                 </div>
@@ -531,17 +585,83 @@
           </div>
         </div>
       </div>
+
+      <!-- Dialog template #1 -->
+    <ng-template #firstDialog>
+      <h2 matDialogTitle>User Profile</h2>
+      <mat-dialog-content>
+        <div class="container">
+          <div class="row flex-lg-nowrap">
+            <div class="col">
+              <div class="row">
+                <div class="col mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="e-profile">
+                        <div class="row">
+                          <div class="col-12 col-sm-auto mb-3">
+                            <div class="mx-auto" style="width: 140px;">
+                              <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
+                                <span style="color: rgb(166, 168, 170); font: bold 8pt Arial;">140x140</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                            <div class="text-center text-sm-left mb-2 mb-sm-0">
+                              <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{peekProfile.firstName}}  {{peekProfile.lastName}}</h4>
+                              <p class="mb-0">{{peekProfile.eMail}}</p>
+                              <div class="text-muted"><small>{{peekProfile.adress}}, {{peekProfile.city}}, {{peekProfile.country}}</small></div>
+                            </div>
+                            <div class="text-center text-sm-right">
+                              <div class="text-muted"><small>Joined 09 Dec 2017</small></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>          
+            </div>
+          </div>
+        </div>
+      </mat-dialog-content>
+      
+      <mat-dialog-actions align="end">        
+        <button mat-button matDialogClose color="primary"> Close</button>
+      </mat-dialog-actions>
+    </ng-template> 
       <!-- Dialog template #2 -->
     <ng-template #secondDialog>
-      <h2 matDialogTitle>Lovely dialog!</h2>
+      <h2 matDialogTitle>Fishing reservation review</h2>
       <mat-dialog-content>
         <div class="row">
           <div class="col">
             <div class="row">
               <div class="col mb-3">
                 <div class="form-group">
-                  <label>About</label>
-                  <textarea class="form-control" rows="5" placeholder="My Bio"></textarea>
+                  <label>Comment</label>
+                  <textarea class="form-control" [(ngModel)]="review.comment" rows="6" placeholder="Your comment about client."></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col mb-3">
+                <div class="form-check">
+                  <input class="form-check-input"  [(ngModel)]="review.report" type="checkbox" value="" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Report this user
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col mb-3">
+                <div class="form-check">
+                  <input class="form-check-input"  [(ngModel)]="review.showUp" type="checkbox" value="" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    User didn't show up
+                  </label>
                 </div>
               </div>
             </div>
@@ -550,7 +670,7 @@
       </mat-dialog-content>
       
       <mat-dialog-actions align="end">
-        <button mat-button matDialogClose color="primary"> Ok</button>
+        <button (click)="submitReview()" mat-button matDialogClose color="primary"> Ok</button>
         <button mat-button matDialogClose color="primary"> Close</button>
       </mat-dialog-actions>
     </ng-template> 

@@ -9,6 +9,8 @@ import { FishingReservation } from '../models/fishing-reservation';
 import { User } from '../models/user';
 import { UserService } from '../services/user.service';
 import { MatDialog } from '@angular/material/dialog';
+import { FishingReview } from '../models/fishing-review';
+import { Availability } from '../models/availability';
 
 @Component({
   selector: 'app-instructor-profile',
@@ -17,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class InstructorProfileComponent implements OnInit {
   instructor: User;
+  peekProfile: User; 
   fishingProfile: Fishing;
   fishingProfiles: Fishing[];
   backupProfiles: Fishing[];
@@ -24,6 +27,8 @@ export class InstructorProfileComponent implements OnInit {
   fishingReservations: FishingReservation[];
   allFishingReservations: FishingReservation[];
   availableReservations: FishingReservation[];
+  clients: User[];
+  allClients: User[];
   selectedFile: File;
   retrievedImages: any[];
   slideIndex: number;
@@ -35,14 +40,20 @@ export class InstructorProfileComponent implements OnInit {
   currPass: string;
   newPass: string;
   confPass: string;
+  review: FishingReview;
+  dialogUser: number;
+  newAvailability: Availability;
 
   public isCollapsed = false;
   public isCollapsed1 = false;
-  @Input() public newAvailableReservation: FishingReservation;
+  @Input() public newReservation: FishingReservation;
   @Input() public newFishing: Fishing;
   @Input() public updateInstructor: User;
   @ViewChild('secondDialog', { static: true })
   secondDialog!: TemplateRef<any>;
+  @ViewChild('firstDialog', { static: true })
+  firstDialog!: TemplateRef<any>;
+
   constructor(private fishingService: FishingService,
               private authenticationService: AuthenticationService,
               private httpClient: HttpClient,
@@ -59,20 +70,28 @@ export class InstructorProfileComponent implements OnInit {
     this.availableReservations = [];
     this.allFishingReservations = [];
     this.retrievedImages = [];
+    this.clients = [];
+    this.allClients = [];
     this.message = "";
     this.selectedFile = new File([""], "filename");
     this.slideIndex = 1;
     this.query = "";
-    this.newAvailableReservation = new FishingReservation();
+    this.newReservation = new FishingReservation();
     this.newFishing = new Fishing();
     this.currPass = "";
     this.newPass = "";
     this.confPass = "";
+    this.dialogUser = 0;
+    this.review = new FishingReview();
+    this.newAvailability = new Availability();
+    this.peekProfile = new User();
+
     
     //this.GetFishingProfile();
     this.GetFishingProfiles();
     this.GetFishingProfileGallery();
     this.GetFishingProfileReservations();
+    this.GetClients();
     this.getImages();
    }
 
@@ -81,6 +100,7 @@ export class InstructorProfileComponent implements OnInit {
     this.GetFishingProfiles();
     this.GetFishingProfileGallery();
     this.GetFishingProfileReservations();
+    this.GetClients();
     this.getImages();
 
     console.log("ODRADIO", this.fishingProfile.adress)
@@ -149,6 +169,34 @@ export class InstructorProfileComponent implements OnInit {
       }
     })
   }
+
+  GetClients(){
+    this.userService.GetAllUsers()
+    .subscribe((data: any) => {
+      this.clients.length = 0;
+      this.allClients.length = 0;
+      for(const d of (data as any)){
+        if(d.regType == "CLIENT"){
+          this.allClients.push(d);
+        }
+        for(let res of this.allFishingReservations){
+          if(res.userId == d.id){
+            this.clients.push(d);
+          }
+        }
+      }
+    })
+  }
+
+  GetFishingAdventure(id: number): Fishing{
+    for(let f of this.fishingProfiles){
+      if(f.id == id){
+        return f;
+      }
+    }
+    return new Fishing();
+  }
+
   ImageAlreadyLoaded(id: number): boolean{
     for(const img of this.fishingImages){
       if(img.id == id){
@@ -260,14 +308,21 @@ formatDate(date: Date) : string{
 }
 
 public addAvailableReservation(){
-  this.newAvailableReservation.fishingClass = this.fishingProfile;
-  this.newAvailableReservation.userId = 0;
-  this.newAvailableReservation.duration = (new Date(this.newAvailableReservation.end).getTime() - new Date(this.newAvailableReservation.start).getTime()) / (1000 * 60);
-  console.log(this.newAvailableReservation);
-  this.fishingService.AddAvailableReservation(this.newAvailableReservation).subscribe((data:any) => {
+  this.newReservation.fishingClass = this.fishingProfile;
+  this.newReservation.userId = 0;
+  this.newReservation.duration = (new Date(this.newReservation.end).getTime() - new Date(this.newReservation.start).getTime()) / (1000 * 60);
+  console.log(this.newReservation);
+  this.fishingService.AddReservation(this.newReservation).subscribe((data:any) => {
     this.GetFishingProfileReservations();
   });
+}
 
+public addReservation(){
+  this.newReservation.duration = (new Date(this.newReservation.end).getTime() - new Date(this.newReservation.start).getTime()) / (1000 * 60);
+  console.log(this.newReservation);
+  this.fishingService.AddReservation(this.newReservation).subscribe((data:any) => {
+    this.GetFishingProfileReservations();
+  });
 }
 
 public addNewFishing(){
@@ -279,8 +334,8 @@ public addNewFishing(){
 
 validate() : boolean{
   if (
-    this.newAvailableReservation.start == null || this.newAvailableReservation.end == null ||
-     this.newAvailableReservation.location == ""  || this.newAvailableReservation.maxCap == 0
+    this.newReservation.start == null || this.newReservation.end == null ||
+     this.newReservation.location == ""  || this.newReservation.maxCap == 0
   )
     return false;
   else 
@@ -340,15 +395,58 @@ updateInstructorProfile(){
   }
 }
 
-isDone(end: Date): boolean{
-  if((Date.now() - new Date(end).getTime()) > 0){
+isDoneAndNotEmpty(r: FishingReservation): boolean{
+  if(((Date.now() - new Date(r.end).getTime()) > 0) && (r.userId != 0)){
     return true;
   }
   return false;
 }
-openDialogWithoutRef() {
-  this.dialog.open(this.secondDialog);
+
+isDone(end: Date): boolean{
+  if(((Date.now() - new Date(end).getTime()) > 0)){
+    return true;
+  }
+  return false;
 }
 
+openDialogWithoutRef(userId: number, first: boolean) {
+  this.peekProfile = this.getClient(userId);
+  if(first){
+    this.dialog.open(this.firstDialog);
+    this.dialogUser = userId;
+  }
+  else{
+    this.dialog.open(this.secondDialog);
+    this.dialogUser = userId;
+    console.log(userId);
+  }
+  
+}
+
+submitReview(){
+  this.review.instructor = this.instructor;
+  this.review.client = this.getClient(this.dialogUser);
+  console.log(this.clients);
+  console.log(this.review);
+  this.fishingService.AddFishingReview(this.review).subscribe();
+}
+getClient(id: number): User{
+  for(let c of this.clients){
+    if(c.id == id){
+      return c;
+    }
+  }
+  return new User();
+}
+addAvailability(){
+  console.log(this.newAvailability);
+  if((new Date(this.newAvailability.to).getTime() - new Date(this.newAvailability.from).getTime())  > 0){
+    this.newAvailability.instructor = this.instructor.id;
+    this.userService.AddAvailability(this.newAvailability).subscribe();
+  }
+  else{
+    alert("Dates are incorrectly chosen.");
+  }
+}
 
 }
