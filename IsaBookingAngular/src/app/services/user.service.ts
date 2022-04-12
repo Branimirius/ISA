@@ -28,7 +28,8 @@ export class UserService {
             country : user.country,
             city : user.city,
             regType : user.regType,
-            active: true
+            active: true,
+            deleteRequested: user.deleteRequested
           };
           let headers = new HttpHeaders({
             'Content-Type': 'application/json' });
@@ -39,6 +40,9 @@ export class UserService {
     public DeleteUser(id: number){
       return this.http.delete<any>("http://localhost:8081/api/users/" + id)
     }
+    
+    
+
     public AddAvailability(avail: Availability){
       const body = {
         id: avail.id,

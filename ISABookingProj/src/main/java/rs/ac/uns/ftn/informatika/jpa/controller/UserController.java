@@ -63,6 +63,7 @@ public class UserController {
 		user.setPhone(userDTO.getPhoneNumber());
 		user.setRegType(userDTO.getRegType());
 		user.setActive(userDTO.isActive());
+		user.setDeleteRequested(userDTO.isDeleteRequested());
 		user = userService.save(user);
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
 	}
@@ -82,6 +83,7 @@ public class UserController {
 		user.setPhone(userDTO.getPhoneNumber());
 		user.setRegType(userDTO.getRegType());
 		user.setActive(userDTO.isActive());
+		user.setDeleteRequested(userDTO.isDeleteRequested());
 		user = userService.save(user);
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
 	}

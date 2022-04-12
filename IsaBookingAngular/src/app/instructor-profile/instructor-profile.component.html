@@ -322,15 +322,12 @@
                           <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{instructor.firstName}}  {{instructor.lastName}}</h4>
                           <p class="mb-0">{{instructor.eMail}}</p>
                           <div class="text-muted"><small>{{instructor.adress}}</small></div>
-                          <div class="mt-2">
-                            <button class="btn btn-primary" type="button">
-                              <i class="fa fa-fw fa-camera"></i>
-                              <span>Change Photo</span>
-                            </button>
-                          </div>
+                          
                         </div>
                         <div class="text-center text-sm-right">
                           <div class="text-muted"><small>Joined 09 Dec 2017</small></div>
+                          <button type="button" [disabled]="instructor.deleteRequested" (click)="requestDelete()" class="btn btn-secondary btn-sm">Delete your profile </button>
+                          <div *ngIf="instructor.deleteRequested" class="text-muted"><small>Profile deletion requested</small></div>
                         </div>
                       </div>
                     </div>

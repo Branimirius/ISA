@@ -449,4 +449,9 @@ addAvailability(){
   }
 }
 
+requestDelete(){
+  this.instructor.deleteRequested = true;
+  this.userService.UpdateUser(this.instructor).subscribe();
+}
+
 }

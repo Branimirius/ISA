@@ -14,9 +14,10 @@ public class UserDTO {
 	private String city;
 	private String regType;
 	private boolean active;
+	private boolean deleteRequested;
 	
 	public UserDTO(Long id, String firstName, String lastName, String eMail, String password, String phoneNumber, String adress,
-			String country, String city, String regType, boolean active) {
+			String country, String city, String regType, boolean active, boolean deleteRequested) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -28,16 +29,25 @@ public class UserDTO {
 		this.city = city;
 		this.regType = regType;
 		this.active = active;
+		this.deleteRequested = deleteRequested;
 	}
 	
 	public UserDTO(User user) {
-		this(user.getId(), user.getFirstName(), user.getLastName(), user.geteMail(),user.getPassword(),user.getPhone(),user.getAdress(), user.getCountry(), user.getCity(), user.getRegType(), user.isActive());
+		this(user.getId(), user.getFirstName(), user.getLastName(), user.geteMail(),user.getPassword(),user.getPhone(),user.getAdress(), user.getCountry(), user.getCity(), user.getRegType(), user.isActive(), user.isDeleteRequested());
 	}
 	
 	public UserDTO() {
 		
 	}
 	
+	public boolean isDeleteRequested() {
+		return deleteRequested;
+	}
+
+	public void setDeleteRequested(boolean deleteRequested) {
+		this.deleteRequested = deleteRequested;
+	}
+
 	public Long getId() {
 		return id;
 	}

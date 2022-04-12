@@ -11,6 +11,7 @@ export class User {
     regType: string; 
     token: string;
     active: boolean;
+    deleteRequested: boolean;
 
     constructor(){
         this.id = 0;
@@ -25,5 +26,6 @@ export class User {
         this.city = "";
         this.regType = ""; 
         this.active = false;
+        this.deleteRequested = false;
     }
 }

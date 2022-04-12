@@ -49,12 +49,15 @@ public class User {
 	@Column(name = "active")
 	private boolean active;
 	
+	@Column(name = "delete_requested")
+	private boolean deleteRequested;
+	
 	public User() {
 		super();
 	}
 	
 	public User(long id, String firstName, String lastName, String eMail, String password, String phone, String adress,
-			String country, String city, String regType, boolean active) {
+			String country, String city, String regType, boolean active, boolean deleteRequested) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -67,13 +70,22 @@ public class User {
 		this.city = city;
 		this.regType = regType;
 		this.active = active;
+		this.deleteRequested = deleteRequested;
 	}
 	
 	public User(UserDTO dto) {
 		this(dto.getId(), dto.getFirstName(), dto.getLastName(), dto.geteMail(), dto.getPassword(), dto.getPhoneNumber(), dto.getAdress(), 
-				dto.getCountry(), dto.getCity(), dto.getRegType(), dto.isActive());
+				dto.getCountry(), dto.getCity(), dto.getRegType(), dto.isActive(), dto.isDeleteRequested());
 	}
 
+
+	public boolean isDeleteRequested() {
+		return deleteRequested;
+	}
+
+	public void setDeleteRequested(boolean deleteRequested) {
+		this.deleteRequested = deleteRequested;
+	}
 
 	public long getId() {
 		return id;

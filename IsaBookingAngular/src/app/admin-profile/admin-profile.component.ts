@@ -16,6 +16,7 @@ export class AdminProfileComponent implements OnInit {
   updatedProfile: User;
   newProfile: RegistrationDto;
   pendingRegistrations: User[];
+  pendingDeletions: User[];
   activeUsers: User[];
   passwordChange: string;
   passwordConfirm : string;
@@ -28,6 +29,7 @@ export class AdminProfileComponent implements OnInit {
     this.newProfile = new RegistrationDto();
     this.pendingRegistrations = [];
     this.activeUsers = [];
+    this.pendingDeletions = [];
     this.passwordConfirm = "";
     this.passwordChange = "";
     this.GetUsers();
@@ -41,9 +43,13 @@ export class AdminProfileComponent implements OnInit {
     this.userService.GetAllUsers().subscribe((data: any) => {
       this.pendingRegistrations.length = 0;
       this.activeUsers.length = 0;
+      this.pendingDeletions.length = 0;
       for(const d of (data as any)){
         if(!d.active && d.regType !== "ADMIN"){
           this.pendingRegistrations.push(d);
+        }
+        else if(d.deleteRequested){
+          this.pendingDeletions.push(d);
         }
         else{
           this.activeUsers.push(d);
@@ -53,6 +59,13 @@ export class AdminProfileComponent implements OnInit {
   }
 
   ActivateRegistration(user: User){
+    this.userService.UpdateUser(user).subscribe((data: any) => {
+      this.RefreshData();
+    });
+  }
+
+  CancelDeleteRequest(user: User){
+    user.deleteRequested = false;
     this.userService.UpdateUser(user).subscribe((data: any) => {
       this.RefreshData();
     });

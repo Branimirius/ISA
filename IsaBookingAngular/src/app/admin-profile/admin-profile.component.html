@@ -117,6 +117,50 @@
                 </tr>
             </tbody>
         </table>
+
+        <h3>Users requesting delete:</h3>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th><abbr >Firstname</abbr></th>
+                <th><abbr >Lastname</abbr></th>
+                <th><abbr >eMail</abbr></th>
+                <th><abbr >Phone</abbr></th>
+                <th><abbr >Adress</abbr></th>
+                <th><abbr >Type</abbr></th>
+                <th><abbr ></abbr></th>
+            </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th><abbr >Firstname</abbr></th>
+                    <th><abbr >Lastname</abbr></th>
+                    <th><abbr >eMail</abbr></th>
+                    <th><abbr >Phone</abbr></th>
+                    <th><abbr >Adress</abbr></th>
+                    <th><abbr >Type</abbr></th>
+                    <th><abbr ></abbr></th>
+
+                </tr>
+            </tfoot>
+            <tbody *ngFor = "let user of pendingDeletions">
+                <tr>
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.eMail}}</td>
+                    <td>{{user.phone}}</td>
+                    <td>{{user.adress}}</td>
+                    <td>{{user.regType}}</td>
+                    <td>
+                        <button (click)="DeleteRegistration(user.id)" type="button" class="btn btn-primary">Delete</button>
+                        <button (click)="CancelDeleteRequest(user)" type="button" class="btn btn-secondary">Cancel</button>
+                    </td>
+
+                    
+                </tr>
+            </tbody>
+        </table>
     </mat-tab>
     <mat-tab class="tab-center" label="Profile Managing"> 
         <div class="center">
