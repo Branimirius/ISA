@@ -17,3 +17,6 @@ insert into instructor_availabilities (user_id, start, end_time) values (2, TO_T
 insert into instructor_availabilities (user_id, start, end_time) values (2, TO_TIMESTAMP('2022-04-09 07:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2022-04-10 15:00:00', 'YYYY-MM-DD HH24:MI:SS'));
 
 insert into fishing_reviews(client, instructor, comment, report, show_up) values (1, 2, 'jedan', true, false);
+
+insert into grades(user_id, subject_id, grade) values (5, 1, 4);
+insert into grades(user_id, subject_id, grade) values (6, 1, 3);
