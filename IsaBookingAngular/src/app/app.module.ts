@@ -24,6 +24,8 @@ import { InstructorProfileComponent } from './instructor-profile/instructor-prof
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { MatInputModule } from '@angular/material/input';
 import { InstructorCalendarComponent } from './instructor-calendar/instructor-calendar.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 
 @NgModule({
@@ -51,6 +53,12 @@ import { InstructorCalendarComponent } from './instructor-calendar/instructor-ca
     MatFormFieldModule,
     MatInputModule,
     MatBadgeModule,
+    BrowserModule,
+    AppRoutingModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
     ToastrModule.forRoot({
       preventDuplicates: false,
       timeOut: 4000,

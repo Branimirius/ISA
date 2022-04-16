@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.informatika.jpa.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,15 @@ public class GradeService {
 	
 	public Grade findOne(Long id) {
 		return gradeRepository.findById(id).orElseGet(null);
+	}
+	public List<Grade> findAllBySubject(Long id) {
+		ArrayList<Grade >ret = new ArrayList<Grade>();
+		for(Grade g : gradeRepository.findAll()) {
+			if(g.getSubjectId() == id) {
+				ret.add(g);
+			}
+		}
+		return ret;
 	}
 
 	public List<Grade> findAll() {

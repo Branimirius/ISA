@@ -39,6 +39,11 @@ public class GradeController {
 		Grade grade = gradeService.findOne(gradeId);
 		return ResponseEntity.ok().body(grade);
 	}
+	//get grade by SubjectId
+	@GetMapping(value = "/bySubject/{id}")
+	public List<Grade> getGradeBySubject(@PathVariable(value = "id") Long subjectId) {
+		return gradeService.findAllBySubject(subjectId);
+	}
 	
 	//save grade
 	

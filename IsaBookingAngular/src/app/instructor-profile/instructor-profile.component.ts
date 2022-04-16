@@ -11,6 +11,8 @@ import { UserService } from '../services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FishingReview } from '../models/fishing-review';
 import { Availability } from '../models/availability';
+import { Grade } from '../models/grade';
+import { GradeService } from '../services/grade.service';
 
 @Component({
   selector: 'app-instructor-profile',
@@ -21,6 +23,7 @@ export class InstructorProfileComponent implements OnInit {
   instructor: User;
   peekProfile: User; 
   fishingProfile: Fishing;
+  fishingGrade: number;
   fishingProfiles: Fishing[];
   backupProfiles: Fishing[];
   fishingImages: FishingImage[];
@@ -58,11 +61,13 @@ export class InstructorProfileComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private httpClient: HttpClient,
               private userService: UserService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private gradeService: GradeService
               ) {
     this.instructor = this.authenticationService.currentUserValue;
     this.updateInstructor = this.authenticationService.currentUserValue;
-    this.fishingProfile = new Fishing;
+    this.fishingProfile = new Fishing();
+    this.fishingGrade = 5;
     this.fishingProfiles = [];
     this.backupProfiles = [];
     this.fishingImages = [];
@@ -113,10 +118,22 @@ export class InstructorProfileComponent implements OnInit {
         for(const d of (data as any)){
           if(this.authenticationService.currentUserValue.id == d.userId){
             this.fishingProfile = d;
+            this.GetFishingGrade(d.id);
           }
       }
     })
   }
+  GetFishingGrade(id: number){
+    this.gradeService.GetGradesBySubject(id).subscribe((data: any) => {
+      let sum = 0;
+      for(const d of (data as any)){
+        sum = sum + d.grade;
+      }
+      this.fishingGrade = sum/data.length;
+      console.log(this.fishingGrade);
+    })
+  }
+
   GetFishingProfiles(){
     
     this.fishingService.GetFishingProfiles()
@@ -344,6 +361,7 @@ validate() : boolean{
 
 openFishing(fishing: Fishing){
   this.fishingProfile = fishing;
+  this.GetFishingGrade(fishing.id);
   this.GetFishingProfileReservations();
   this.getImages();
 }
