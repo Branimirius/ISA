@@ -332,6 +332,9 @@ public addAvailableReservation(){
   this.fishingService.AddReservation(this.newReservation).subscribe((data:any) => {
     this.GetFishingProfileReservations();
   });
+  this.userService.SendMail().subscribe((data: any) => {
+    
+  })
 }
 
 public addReservation(){

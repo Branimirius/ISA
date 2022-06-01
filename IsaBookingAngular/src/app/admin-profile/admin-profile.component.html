@@ -280,4 +280,47 @@
             </mat-grid-tile>
           </mat-grid-list>
     </mat-tab> 
+    <mat-tab class="tab-center" label="Loyality program"> 
+      
+          <h3>Loyality points settings:</h3>
+          <mat-grid-list cols="1" rowHeight="700px">
+            <mat-grid-tile>
+              <div class="example-container" >
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Client points step</mat-label>
+                  <input type="number" matInput [(ngModel)]="loyalityProgram.clientPointStep">
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Owner points step</mat-label>
+                  <input type="number"  matInput [(ngModel)]="loyalityProgram.ownerPointStep">
+                </mat-form-field>
+                <br>
+              
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Bronze limit</mat-label>
+                  <input type="number" matInput [(ngModel)]="loyalityProgram.bronzeLine"  >
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Silver limit</mat-label>
+                  <input type="number" matInput [(ngModel)]="loyalityProgram.silverLine">
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Gold limit</mat-label>
+                  <input type="number" matInput [(ngModel)]="loyalityProgram.goldLine">
+                </mat-form-field>
+                <br>
+                <mat-card-actions>
+                  <button (click) = "updateLoyality()" mat-raised-button color="primary">Update Loyality</button>
+                </mat-card-actions>
+                <br>
+                <br>
+                <br>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+      
+    </mat-tab> 
 </mat-tab-group>  

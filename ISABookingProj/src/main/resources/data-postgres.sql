@@ -20,3 +20,5 @@ insert into fishing_reviews(client, instructor, comment, report, show_up) values
 
 insert into grades(user_id, subject_id, grade) values (5, 1, 4);
 insert into grades(user_id, subject_id, grade) values (6, 1, 3);
+
+insert into loyality_program(client_points, owner_points, bronze_line, silver_line, gold_line) values (1, 2, 4, 8, 12);

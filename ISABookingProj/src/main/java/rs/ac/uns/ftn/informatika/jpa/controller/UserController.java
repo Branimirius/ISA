@@ -18,12 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.jpa.dto.InstructorAvailabilityDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.LoyalityProgramDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.UserDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.UserLoginDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.InstructorAvailability;
+import rs.ac.uns.ftn.informatika.jpa.model.LoyalityProgram;
+import rs.ac.uns.ftn.informatika.jpa.model.Mail;
 import rs.ac.uns.ftn.informatika.jpa.model.User;
 import rs.ac.uns.ftn.informatika.jpa.service.InstructorAvailabilityService;
 import rs.ac.uns.ftn.informatika.jpa.service.UserService;
+import rs.ac.uns.ftn.informatika.jpa.service.LoyalityProgramService;
+import rs.ac.uns.ftn.informatika.jpa.service.SendMailService;
+
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -33,6 +39,10 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private InstructorAvailabilityService availabilityService;
+	@Autowired
+	private LoyalityProgramService loyalityProgramService;
+	@Autowired
+	private SendMailService sendMailService;
 	
 	//get users
 	@GetMapping(value = "/users")
@@ -46,6 +56,13 @@ public class UserController {
 		User user = userService.findOne(userId);
 		return ResponseEntity.ok().body(user);
 	}
+	
+	//get loyality 
+		@GetMapping(value = "/loyality")
+		public ResponseEntity<LoyalityProgram> getLoyalityOne() {
+			LoyalityProgram loyality = loyalityProgramService.findOne((long) 1);
+			return ResponseEntity.ok().body(loyality);
+		}
 	
 	//save user
 	
@@ -123,5 +140,26 @@ public class UserController {
 		availability = availabilityService.save(availability);
 		return new ResponseEntity<>(new InstructorAvailabilityDTO(availability), HttpStatus.CREATED);
 	}
+	//update user
+	@PutMapping(value = "/loyality", consumes = "application/json")
+	public ResponseEntity<LoyalityProgramDTO> updateLoyality(@RequestBody LoyalityProgramDTO loyalityProgramDTO) {
+		System.out.println("UPDATE: " + loyalityProgramDTO.getId() + " " );
+		LoyalityProgram loyalityProgram = loyalityProgramService.findOne((long)1);
+		loyalityProgram.setClientPointStep(loyalityProgramDTO.getClientPointStep());
+		loyalityProgram.setOwnerPointStep(loyalityProgramDTO.getOwnerPointStep());
+		loyalityProgram.setBronzeLine(loyalityProgramDTO.getBronzeLine());
+		loyalityProgram.setSilverLine(loyalityProgramDTO.getSilverLine());
+		loyalityProgram.setGoldLine(loyalityProgramDTO.getGoldLine());
+		
+		loyalityProgram = loyalityProgramService.save(loyalityProgram);
+		return new ResponseEntity<>(new LoyalityProgramDTO(loyalityProgram), HttpStatus.CREATED);
+	}
+	@PostMapping(value = "/mail", consumes = "application/json")
+	public ResponseEntity<Mail> sendMail(@RequestBody Mail mail) {
+
+		sendMailService.sendMail(mail);
+		return new ResponseEntity<>(mail, HttpStatus.CREATED);
+	}
+	
 
 }

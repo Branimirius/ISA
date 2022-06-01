@@ -5,6 +5,8 @@ import { RegistrationDto } from '../registration/registration.dto';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserService } from '../services/user.service';
 import { RegistrationService} from '../services/registration.service'
+import { NumberValueAccessor } from '@angular/forms';
+import { LoyalityProgram } from '../models/loyality-program';
 
 @Component({
   selector: 'app-admin-profile',
@@ -20,6 +22,7 @@ export class AdminProfileComponent implements OnInit {
   activeUsers: User[];
   passwordChange: string;
   passwordConfirm : string;
+  loyalityProgram: LoyalityProgram;
 
   constructor(private authenticationService: AuthenticationService,
               private userService: UserService,
@@ -32,7 +35,9 @@ export class AdminProfileComponent implements OnInit {
     this.pendingDeletions = [];
     this.passwordConfirm = "";
     this.passwordChange = "";
+    this.loyalityProgram = new LoyalityProgram();
     this.GetUsers();
+    this.GetLoyalityProgram();
   }
 
   ngOnInit(): void {
@@ -55,6 +60,11 @@ export class AdminProfileComponent implements OnInit {
           this.activeUsers.push(d);
         }
       }
+    })
+  }
+  GetLoyalityProgram(){
+    this.userService.GetLoyalityProgram().subscribe((data: any) => {
+      this.loyalityProgram = data as LoyalityProgram;
     })
   }
 
@@ -109,6 +119,12 @@ export class AdminProfileComponent implements OnInit {
       alert("Passwords didn't match. Try again.");
       this.passwordConfirm = "";
     }
+  }
+
+  updateLoyality(){
+    this.userService.UpdateLoyality(this.loyalityProgram).subscribe((data: any) => {
+      this.GetLoyalityProgram();
+    });
   }
 
 }
