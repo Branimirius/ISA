@@ -346,7 +346,8 @@ public addReservation(){
 }
 
 public addNewFishing(){
-  this.newFishing.userId = this.fishingProfiles[0].userId;
+  console.log(this.fishingProfiles);
+  this.newFishing.userId = this.authenticationService.currentUserValue.id;
   this.fishingService.AddNewFishing(this.newFishing).subscribe((data:any) => {
     this.GetFishingProfiles();
   });
