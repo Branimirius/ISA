@@ -26,6 +26,7 @@ import { MatInputModule } from '@angular/material/input';
 import { InstructorCalendarComponent } from './instructor-calendar/instructor-calendar.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { HouseOwnerProfileComponent } from './house-owner-profile/house-owner-profile.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     LoginComponent,
     InstructorProfileComponent,
     AdminProfileComponent,
-    InstructorCalendarComponent
+    InstructorCalendarComponent,
+    HouseOwnerProfileComponent
   ],
   imports: [
     BrowserModule,

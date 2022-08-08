@@ -17,6 +17,12 @@
                 <li *ngIf = "loggedUser.regType == 'INSTRUCTOR'" class="nav-item">
                     <a class="nav-link" routerLink='/instructorProfile'> Profile </a>
                 </li>
+                <li *ngIf = "loggedUser.regType == 'HOUSE_OWNER'" class="nav-item">
+                    <a class="nav-link" routerLink='/houseOwnerProfile'> House Owner</a>
+                </li>&nbsp;
+                <li *ngIf = "loggedUser.regType == 'BOAT_OWNER'" class="nav-item">
+                    <a class="nav-link" routerLink='/'> Boat Owner</a>
+                </li>&nbsp;
                 <li *ngIf = "loggedUser.regType == 'ADMIN'" class="nav-item">
                     <a class="nav-link" routerLink='/adminProfile'> Profile </a>
                 </li>

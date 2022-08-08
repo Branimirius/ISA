@@ -1,7 +1,11 @@
 <app-navigation></app-navigation>
 
-<div class="landing-body">
+<div class="landing-body" *ngIf = "loggedUser.regType == 'INSTRUCTOR'">
     <img src="./assets/LakeHouseLogo.jpg"
              class="img-landing"
              style="max-height:100%; padding-bottom:10px; width:100%;" />
 </div>
+<div class="landing-body_house" *ngIf = "loggedUser.regType == 'HOUSE_OWNER'">
+    <img src="./assets/635864743840554304.jpg" class="img-landing"style= " max-height:90%; width: 100%; padding-bottom:20px;" />
+</div>
+

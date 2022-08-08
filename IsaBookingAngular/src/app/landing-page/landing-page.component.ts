@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { User } from '../models/user';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -7,7 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingPageComponent implements OnInit {
 
-  constructor() { }
+  public loggedUser : User;
+  constructor(private router: Router, private authenticationService: AuthenticationService) { 
+    this.loggedUser = authenticationService.currentUserValue;
+  }
 
   ngOnInit(): void {
   }

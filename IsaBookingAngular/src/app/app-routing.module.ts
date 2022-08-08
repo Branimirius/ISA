@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { InstructorProfileComponent } from './instructor-profile/instructor-profile.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { InstructorCalendarComponent }from './instructor-calendar/instructor-calendar.component';
+import { HouseOwnerProfileComponent } from './house-owner-profile/house-owner-profile.component';
 
 
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'instructorProfile', component: InstructorProfileComponent},
   { path: 'instructorCalendar', component: InstructorCalendarComponent},
   { path: 'adminProfile', component: AdminProfileComponent},
+  { path: 'houseOwnerProfile', component: HouseOwnerProfileComponent},
 
   { path: '', redirectTo: 'landingPage', pathMatch: 'full' },
   { path: '**', redirectTo: 'landingPage', pathMatch: 'full' },
