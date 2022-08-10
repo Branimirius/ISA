@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,18 +18,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import rs.ac.uns.ftn.informatika.jpa.dto.InstructorAvailabilityDTO;
-import rs.ac.uns.ftn.informatika.jpa.dto.LoyalityProgramDTO;
-import rs.ac.uns.ftn.informatika.jpa.dto.UserDTO;
-import rs.ac.uns.ftn.informatika.jpa.dto.UserLoginDTO;
+import rs.ac.uns.ftn.informatika.jpa.dto.*;
 import rs.ac.uns.ftn.informatika.jpa.model.InstructorAvailability;
 import rs.ac.uns.ftn.informatika.jpa.model.LoyalityProgram;
 import rs.ac.uns.ftn.informatika.jpa.model.Mail;
 import rs.ac.uns.ftn.informatika.jpa.model.User;
-import rs.ac.uns.ftn.informatika.jpa.service.InstructorAvailabilityService;
-import rs.ac.uns.ftn.informatika.jpa.service.UserService;
-import rs.ac.uns.ftn.informatika.jpa.service.LoyalityProgramService;
-import rs.ac.uns.ftn.informatika.jpa.service.SendMailService;
+import rs.ac.uns.ftn.informatika.jpa.security.TokenUtil;
+import rs.ac.uns.ftn.informatika.jpa.service.*;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -43,7 +39,16 @@ public class UserController {
 	private LoyalityProgramService loyalityProgramService;
 	@Autowired
 	private SendMailService sendMailService;
-	
+
+	@Autowired
+	private TokenUtil tokenUtil;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private CustomUserDetailsService customUserService;
+
 	//get users
 	@GetMapping(value = "/users")
 	public List<User> getAllUsers(){
@@ -129,6 +134,22 @@ public class UserController {
 		}
 		//return ResponseEntity.ok().body(user);
 	}
+
+	@PostMapping(path = "/login")
+	public ResponseEntity<?> login(@RequestBody UserLoginDTO userLoginDTO) {
+
+		User user = customUserService.findUserByEmail(userLoginDTO.geteMail());
+
+		if (user == null || !passwordEncoder.matches(userLoginDTO.getPass(), user.getPassword())) {
+			return ResponseEntity.ok(HttpStatus.UNAUTHORIZED);
+		}
+
+		String token = tokenUtil.generateToken(user.geteMail(), user.getRegType());
+		LoginResponseDTO responseDTO = new LoginResponseDTO();
+		responseDTO.setToken(token);
+		return ResponseEntity.ok(responseDTO);
+	}
+
 	@PostMapping(value = "/availabilities", consumes = "application/json")
 	public ResponseEntity<InstructorAvailabilityDTO> saveInstructorAvailability(@RequestBody InstructorAvailabilityDTO availabilityDTO) {
 
