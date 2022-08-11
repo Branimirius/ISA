@@ -21,4 +21,14 @@ export class NavigationComponent implements OnInit {
   logOutClick(): void {
     this.authenticationService.logout();
   }
+  getUser() : any {
+    let userString = localStorage.getItem('currentUser');
+    
+    if(userString)
+    {
+      return JSON.parse(userString);
+    }
+
+    return null;
+  }
 }

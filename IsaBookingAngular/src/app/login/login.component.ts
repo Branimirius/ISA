@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
           username: ['', Validators.required],
           password: ['', Validators.required]
         });
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/landingPage';
     }
 
     ngOnInit() {
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         });
 
         // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/landingPage';
     }
 
     // convenience getter for easy access to form fields
@@ -62,12 +62,7 @@ export class LoginComponent implements OnInit {
         .pipe(first())
         .subscribe(
             data => {
-                if(data == null){
-                    this.loading = false;
-                }
-                else{
-                    this.router.navigate([this.returnUrl]);
-                }
+                this.router.navigate([this.returnUrl]);
             },
             error => {
                 this.alertService.error(error);

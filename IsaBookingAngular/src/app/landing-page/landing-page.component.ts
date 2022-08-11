@@ -10,12 +10,24 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class LandingPageComponent implements OnInit {
 
-  public loggedUser : User;
+  public loggedUser : any;
   constructor(private router: Router, private authenticationService: AuthenticationService) { 
-    this.loggedUser = authenticationService.currentUserValue;
+    
   }
 
   ngOnInit(): void {
+    
+  }
+
+  getUser() : any {
+    let userString = localStorage.getItem('currentUser');
+    
+    if(userString)
+    {
+      return JSON.parse(userString);
+    }
+
+    return null;
   }
 
 }

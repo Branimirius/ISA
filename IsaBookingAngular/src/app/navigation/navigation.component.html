@@ -14,16 +14,16 @@
                 <li *ngIf = "loggedUser.id == null" class="nav-item">
                     <a class="nav-link" routerLink='/login'> Login </a>
                 </li>
-                <li *ngIf = "loggedUser.regType == 'INSTRUCTOR'" class="nav-item">
+                <li *ngIf = "getUser()?.regType == 'INSTRUCTOR'" class="nav-item">
                     <a class="nav-link" routerLink='/instructorProfile'> Profile </a>
                 </li>
-                <li *ngIf = "loggedUser.regType == 'HOUSE_OWNER'" class="nav-item">
+                <li *ngIf = "getUser()?.regType == 'HOUSE_OWNER'" class="nav-item">
                     <a class="nav-link" routerLink='/houseOwnerProfile'> House Owner</a>
                 </li>&nbsp;
-                <li *ngIf = "loggedUser.regType == 'BOAT_OWNER'" class="nav-item">
+                <li *ngIf = "getUser()?.regType == 'BOAT_OWNER'" class="nav-item">
                     <a class="nav-link" routerLink='/'> Boat Owner</a>
                 </li>&nbsp;
-                <li *ngIf = "loggedUser.regType == 'ADMIN'" class="nav-item">
+                <li *ngIf = "getUser()?.regType == 'ADMIN'" class="nav-item">
                     <a class="nav-link" routerLink='/adminProfile'> Profile </a>
                 </li>
 

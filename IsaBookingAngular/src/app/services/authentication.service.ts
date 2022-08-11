@@ -30,14 +30,31 @@ export class AuthenticationService {
           let headers = new HttpHeaders({
             'Content-Type': 'application/json' });
           let options = { headers: headers };
-        return this.http.post<any>("http://localhost:8081/api/authenticate", body, options)
-            .pipe(map(user => {
+        return this.http.post<any>("http://localhost:8081/api/login", body, options)
+            .pipe(map(token => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.currentUserSubject.next(user);
-                console.log("Ulogovani posle logovanja:", localStorage.getItem('currentUser'));
-                return user;
+                //localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('token', token.token);
+               
+                //console.log("Ulogovani posle logovanja:", localStorage.getItem('currentUser'));
+               // return user;
+               this.getCurrentUser().subscribe(data => {
+                console.log(data)
+                this.currentUserSubject.next(data);
+                
+                localStorage.setItem('currentUser', JSON.stringify(data));
+               })
+            
             }));
+    }
+
+    getCurrentUser() {
+        
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token') });
+        let options = { headers: headers };
+        return this.http.get<any>("http://localhost:8081/api/currentUser", options);
     }
 
     logout() {
@@ -45,6 +62,7 @@ export class AuthenticationService {
         console.log("Ulogovani:", localStorage.getItem('currentUser'));
 
         localStorage.removeItem('currentUser');
+        localStorage.removeItem('token');
         this.currentUserSubject.next(JSON.parse('{}'));
         this.router.navigate(['/login']);
         console.log("Ulogovani:", localStorage.getItem('currentUser'));

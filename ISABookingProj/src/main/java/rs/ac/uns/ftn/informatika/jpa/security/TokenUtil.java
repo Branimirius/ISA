@@ -16,7 +16,7 @@ public class TokenUtil {
     @Value("ISA")
     private String APP_NAME;
 
-    @Value("secret")
+    @Value("Cs2LASfTagKoMd59uHtbCs2LASfTagKoMd59uHtbCs2LASfTagKoMd59uHtbCs2LASfTagKoMd59uHtbCs2LASfTagKoMd59uHtbCs2LASfTagKoMd59uHtbCs2LASfTagKoMd59uHtb")
     private String SECRET;
 
     @Value("3600000")
@@ -39,7 +39,7 @@ public class TokenUtil {
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
                 .claim("roles", role)
-                .signWith(SIGNATURE_ALGORITHM, "MZDUYB1QZ9ZR381FWLJ9MZDUYB1QZ9ZR381FWLJ9MZDUYB1QZ9ZR381FWLJ9MZDUYB1QZ9ZR381FWLJ9MZDUYB1QZ9ZR381FWLJ9MZDUYB1QZ9ZR381FWLJ9MZDUYB1QZ9ZR381FWLJ9")
+                .signWith(SIGNATURE_ALGORITHM, SECRET)
                 .compact();
     }
     private String generateAudience() {

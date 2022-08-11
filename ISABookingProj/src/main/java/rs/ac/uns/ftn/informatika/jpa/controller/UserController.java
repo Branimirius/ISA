@@ -112,27 +112,12 @@ public class UserController {
 	
 	//delete user
 	@DeleteMapping(value = "/users/{id}")
-	public Map<String, Boolean> deleteUser(@PathVariable(value = "id") long userId) {	
+	public Map<String, Boolean> deleteUser(@PathVariable(value = "id") long userId) {
 		this.userService.remove(userId);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
-		
+
 		return response;
-	}
-	
-	@PostMapping(value = "/authenticate", consumes = "application/json")
-	public ResponseEntity<User> loginUser(@RequestBody UserLoginDTO userLoginDTO) {
-		System.out.println("KONTROLA 1: " + userLoginDTO.geteMail() + " " + userLoginDTO.getPass());
-		User user = userService.findOneByLogin(userLoginDTO.geteMail(), userLoginDTO.getPass());
-		if((userService.findOneByLogin(userLoginDTO.geteMail(), userLoginDTO.getPass()) != null) && (user.isActive() || user.getRegType().equals("ADMIN"))) {
-			System.out.println("KONTROLA 3: " + user.geteMail() + " " + user.getPassword());
-			return ResponseEntity.ok().body(user);
-		}
-		else {
-			System.out.println("KONTROLA3: NULLLLL, Active: " + user.isActive() + "  Admin: " + user.getRegType());
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-		}
-		//return ResponseEntity.ok().body(user);
 	}
 
 	@PostMapping(path = "/login")
@@ -148,6 +133,15 @@ public class UserController {
 		LoginResponseDTO responseDTO = new LoginResponseDTO();
 		responseDTO.setToken(token);
 		return ResponseEntity.ok(responseDTO);
+	}
+
+	@GetMapping(path="/currentUser")
+	public ResponseEntity<User> getCurrentUser(){
+		User user = userService.getCurrentUser();
+		if(user != null)
+			return new ResponseEntity<>(user, HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	@PostMapping(value = "/availabilities", consumes = "application/json")
