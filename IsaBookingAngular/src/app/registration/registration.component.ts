@@ -10,10 +10,12 @@ import { RegistrationDto } from './registration.dto';
 export class RegistrationComponent implements OnInit {
   @Input() public newUser: RegistrationDto;
   public passwordConfirm : string;
+  public reason: string;
 
   constructor(private rs : RegistrationService) {
     this.newUser = new RegistrationDto();
     this.passwordConfirm = "";
+    this.reason = "";
   }
 
   ngOnInit(): void {
@@ -63,7 +65,7 @@ export class RegistrationComponent implements OnInit {
     if (
       this.newUser.FirstName == "" || this.newUser.LastName == "" ||
       this.newUser.Email == "" || this.newUser.Password == "" || this.newUser.PhoneNumber == "" || this.newUser.Country == "" || this.newUser.City == "" ||
-      this.newUser.Adress == "" || this.passwordConfirm != this.newUser.Password || this.passwordConfirm == ""
+      this.newUser.Adress == "" || this.passwordConfirm != this.newUser.Password || this.passwordConfirm == "" || this.reason == ""
     )
       return false;
     else 

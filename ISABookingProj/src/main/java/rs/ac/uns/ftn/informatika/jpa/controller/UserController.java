@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,6 +50,10 @@ public class UserController {
 	@Autowired
 	private CustomUserDetailsService customUserService;
 
+    public PasswordEncoder passwordEncoder()
+    {
+        return new BCryptPasswordEncoder();
+    }
 	//get users
 	@GetMapping(value = "/users")
 	public List<User> getAllUsers(){
@@ -81,7 +86,7 @@ public class UserController {
 		user.seteMail(userDTO.geteMail());
 		user.setFirstName(userDTO.getFirstName());
 		user.setLastName(userDTO.getLastName());
-		user.setPassword(userDTO.getPassword());
+		user.setPassword(passwordEncoder().encode(userDTO.getPassword()));
 		user.setPhone(userDTO.getPhoneNumber());
 		user.setRegType(userDTO.getRegType());
 		user.setActive(userDTO.isActive());
