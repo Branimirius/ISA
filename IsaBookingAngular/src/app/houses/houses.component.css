@@ -1,0 +1,18 @@
+* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  width: 250px;
+  height: 250px;
+  position: relative;
+  margin: auto;
+  background-color: #717171;
+  
+}
+
+#buttonCorner {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  

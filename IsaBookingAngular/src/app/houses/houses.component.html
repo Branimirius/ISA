@@ -1,0 +1,53 @@
+<app-navigation></app-navigation>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<h2> Your Houses: ({{houses.length}})</h2>
+
+<div class="input-group" style="float:right;">
+<button  type="button" class="btn btn-outline-primary">ADD NEW</button>&nbsp;&nbsp;
+<div class="form-outline">
+    <input type="search" id="form1" class="form-control" [(ngModel)]="query"/>
+</div>&nbsp;&nbsp;
+<div>
+    <button type="button" (click)="searchHouses()" class="btn btn-primary">Search</button>&nbsp;
+    <button type="button" (click)="getHouses()" class="btn btn-secondary">Reset</button>
+</div>
+</div><br><br><br>
+<div class="container">
+    <div class="card-deck mb-3 text-center">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h1 class="my-0 font-weight-normal">house.name</h1>
+          
+        </div>
+        <div class="card-body">
+          <h3 class="card-title pricing-card-title">house.address</h3>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>house.description</li>
+          </ul>
+          <button type="button" (click)="openHouse()" class="btn btn-lg btn-block btn-outline-primary">Open</button>
+        </div>
+        <div>
+          <button type="button" id="buttonCorner" (click)="deleteHouse()" class="btn btn-danger">Delete</button>
+        </div>
+      </div>    
+    </div>
+    <div class="card-deck mb-3 text-center">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h1 class="my-0 font-weight-normal">Ime</h1>
+            
+          </div>
+          <div class="card-body">
+            <h3 class="card-title pricing-card-title">Adresa</h3>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>Opis</li>
+            </ul>
+            <button type="button" (click)="openHouse()" class="btn btn-lg btn-block btn-outline-primary">Open</button>
+          </div>
+          <div>
+            <button type="button" id="buttonCorner" (click)="deleteHouse()" class="btn btn-danger">Delete</button>
+          </div>
+        </div>    
+      </div>
+</div>

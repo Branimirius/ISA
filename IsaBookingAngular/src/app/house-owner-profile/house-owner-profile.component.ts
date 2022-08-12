@@ -55,6 +55,12 @@ export class HouseOwnerProfileComponent implements OnInit {
       }
     }
   }
+
+  
+requestDelete(){
+  this.houseOwner.deleteRequested = true;
+  this.userService.UpdateUser(this.houseOwner).subscribe();
+}
  
 
 }

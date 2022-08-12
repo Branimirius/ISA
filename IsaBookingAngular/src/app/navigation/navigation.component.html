@@ -19,14 +19,16 @@
                 </li>
                 <li *ngIf = "getUser()?.regType == 'HOUSE_OWNER'" class="nav-item">
                     <a class="nav-link" routerLink='/houseOwnerProfile'> House Owner</a>
-                </li>&nbsp;
+                </li>
                 <li *ngIf = "getUser()?.regType == 'BOAT_OWNER'" class="nav-item">
                     <a class="nav-link" routerLink='/'> Boat Owner</a>
                 </li>&nbsp;
                 <li *ngIf = "getUser()?.regType == 'ADMIN'" class="nav-item">
                     <a class="nav-link" routerLink='/adminProfile'> Profile </a>
                 </li>
-
+                <li *ngIf = "getUser()?.regType == 'HOUSE_OWNER'" class="nav-item">
+                    <a class="nav-link" routerLink='/houses'> Houses</a>
+                </li>&nbsp;
             </ul>
             
             <button *ngIf = "loggedUser.id != null" (click) = "logOutClick()" class="btn btn-sm btn-outline-secondary"  type="button">Logout</button>

@@ -3,9 +3,6 @@
 
 <mat-tab-group >
 
-  <mat-tab class="tab-center" label="Houses"> 
-
-  </mat-tab>
   <mat-tab class="tab-center" label="Settings"> 
         <div class="container">
             <div class="row flex-lg-nowrap">
@@ -31,9 +28,10 @@
                                 
                               </div>
                               <div class="text-center text-sm-right">
-                                <div class="text-muted"><small>Joined 09 Dec 2018</small></div>
-                                <button type="button"  class="btn btn-secondary btn-sm">Delete your profile </button>
-                                <div class="text-muted"><small>Profile deletion requested</small></div>
+                                <div class="text-muted"><small>Joined 09 Dec 2017</small></div>
+                                <input type="text" placeholder="Why?"/>&nbsp;
+                                <button type="button" [disabled]="houseOwner.deleteRequested" (click)="requestDelete()" class="btn btn-danger btn-sm">Delete your profile </button>
+                                <div *ngIf="houseOwner.deleteRequested" class="text-muted"><small>Profile deletion requested</small></div>
                               </div>
                             </div>
                           </div>
