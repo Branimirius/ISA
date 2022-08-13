@@ -4,6 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { User } from '../models/user';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserService } from '../services/user.service';
+import { HouseService } from '../services/house.service';
+import { House } from '../models/house';
+import { isThursday } from 'date-fns';
 
 @Component({
   selector: 'app-house-owner-profile',
@@ -29,11 +32,13 @@ export class HouseOwnerProfileComponent implements OnInit {
     this.currPass = "";
     this.newPass = "";
     this.confPass = "";   
-  
+
   }
 
   ngOnInit(): void {
+    
   }
+
 
   updateHouseOwnerProfile(){
     if(this.currPass == "" && this.newPass == "" && this.confPass == ""){
@@ -56,7 +61,8 @@ export class HouseOwnerProfileComponent implements OnInit {
     }
   }
 
-  
+
+
 requestDelete(){
   this.houseOwner.deleteRequested = true;
   this.userService.UpdateUser(this.houseOwner).subscribe();

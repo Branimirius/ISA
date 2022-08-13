@@ -13,6 +13,9 @@ public class House {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
 
+    @Column(name = "user_id", nullable = false)
+    public long userId;
+
     @Column(name = "name", nullable = false)
     public String name;
     @Column(name = "address", nullable = false)
@@ -28,9 +31,10 @@ public class House {
 
 
     public House(){}
-    public House(long id, String name, String address, String description, String rules){
+    public House(long id, long userId, String name, String address, String description, String rules){
         super();
         this.id = id;
+        this.userId = userId;
         this.name = name;
         this.address = address;
         this.description = description;
@@ -39,10 +43,19 @@ public class House {
 
     public House(HouseDTO houseDTO){
         this.id = houseDTO.id;
+        this.userId = houseDTO.userId;
         this.name = houseDTO.name;
         this.address = houseDTO.address;
         this.description = houseDTO.description;
         this.rules = houseDTO.rules;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public long getId() {

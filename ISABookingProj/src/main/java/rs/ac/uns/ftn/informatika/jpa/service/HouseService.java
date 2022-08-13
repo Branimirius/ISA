@@ -47,6 +47,7 @@ public class HouseService {
         if(status){
             House house = houseRepository.findById(houseDTO.id).orElse(null);
             assert house != null;
+            house.userId = houseDTO.userId;
             house.name = houseDTO.name;
             house.address = houseDTO.address;
             house.description = houseDTO.description;

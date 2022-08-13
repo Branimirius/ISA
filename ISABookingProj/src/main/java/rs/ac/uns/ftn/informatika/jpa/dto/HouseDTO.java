@@ -5,6 +5,7 @@ import rs.ac.uns.ftn.informatika.jpa.model.House;
 public class HouseDTO {
 
     public long id;
+    public long userId;
     public String name;
     public String address;
     public String description;
@@ -12,9 +13,10 @@ public class HouseDTO {
 
     public HouseDTO(){}
 
-    public HouseDTO(long id, String name, String address, String description, String rules) {
+    public HouseDTO(long id, long userId, String name, String address, String description, String rules) {
         super();
         this.id = id;
+        this.userId = userId;
         this.name = name;
         this.address = address;
         this.description = description;
@@ -23,10 +25,19 @@ public class HouseDTO {
 
     public HouseDTO(House house){
        this.id = house.id;
+       this.userId = house.userId;
        this.name = house.name;
        this.address = house.address;
        this.description = house.description;
        this.rules = house.rules;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public long getId() {
