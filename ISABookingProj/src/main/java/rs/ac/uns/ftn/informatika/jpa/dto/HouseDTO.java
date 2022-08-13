@@ -1,34 +1,18 @@
-package rs.ac.uns.ftn.informatika.jpa.model;
+package rs.ac.uns.ftn.informatika.jpa.dto;
 
+import rs.ac.uns.ftn.informatika.jpa.model.House;
 
-import rs.ac.uns.ftn.informatika.jpa.dto.HouseDTO;
+public class HouseDTO {
 
-import javax.persistence.*;
-
-@Entity(name = "houses")
-@Table(name = "houses")
-public class House {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
-
-    @Column(name = "name", nullable = false)
     public String name;
-    @Column(name = "address", nullable = false)
     public String address;
-    @Column(name = "description", nullable = false)
     public String description;
-    //1) slike enterijera i eksterijera
-    //2) broj soba, broj kreveta po sobi
-    //3) slobodni termini sa akcijama za brzu rezervaciju
-    @Column(name = "rules", nullable = false)
     public String rules;
-    //4) cenovnik i informacije o dodatnim uslugama
 
+    public HouseDTO(){}
 
-    public House(){}
-    public House(long id, String name, String address, String description, String rules){
+    public HouseDTO(long id, String name, String address, String description, String rules) {
         super();
         this.id = id;
         this.name = name;
@@ -37,12 +21,12 @@ public class House {
         this.rules = rules;
     }
 
-    public House(HouseDTO houseDTO){
-        this.id = houseDTO.id;
-        this.name = houseDTO.name;
-        this.address = houseDTO.address;
-        this.description = houseDTO.description;
-        this.rules = houseDTO.rules;
+    public HouseDTO(House house){
+       this.id = house.id;
+       this.name = house.name;
+       this.address = house.address;
+       this.description = house.description;
+       this.rules = house.rules;
     }
 
     public long getId() {

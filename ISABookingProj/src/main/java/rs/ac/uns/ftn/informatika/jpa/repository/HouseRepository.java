@@ -6,4 +6,5 @@ import rs.ac.uns.ftn.informatika.jpa.model.House;
 
 @Repository
 public interface HouseRepository extends JpaRepository<House, Long> {
+
 }
