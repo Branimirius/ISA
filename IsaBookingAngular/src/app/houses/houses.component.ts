@@ -19,7 +19,8 @@ export class HousesComponent implements OnInit {
   houseOwner : User;
 
   
-
+  public isCollapsed = false;
+  public isCollapsed1 = false;
 
   @Input() public newHouse: House;
   constructor(private authenticationService: AuthenticationService,
@@ -63,8 +64,12 @@ export class HousesComponent implements OnInit {
       })
   }
 
-  openHouse(){
-    
+  openHouse(house: House){
+    this.houseProfile = house;
+  }
+
+  closeHouse(){
+    this.houseProfile = new House();
   }
 
   removeHouse(house: number){
@@ -76,5 +81,21 @@ export class HousesComponent implements OnInit {
         alert("You can't delete this house.");
       }
     })
+  }
+
+  addNewHouse(){
+    this.newHouse.userId = this.authenticationService.currentUserValue.id;
+    this.houseService.addNewHouse(this.newHouse).subscribe((data: any)=>{
+      this.getAllHouses();
+    });
+
+  }
+
+  updateHouse(){
+    this.houseService.updateHouse(this.houseProfile).subscribe((houseProfile: House)=>{
+      this.houseProfile = houseProfile;
+      alert("Successfuly updated.");  
+      console.log(this.houseProfile);
+    });
   }
 }

@@ -1,22 +1,112 @@
 <app-navigation></app-navigation>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<div *ngIf="!(houseProfile.id == 0)">
+  <button type="button" (click)="closeHouse()" class="btn btn-lg btn-block btn-outline-primary">Back</button>
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <mat-grid-list cols="1" rowHeight="400px">
+      <mat-grid-tile>
+          <div class="example-container" >
+            <mat-form-field appearance="fill" class="width-150">
+              <mat-label>Name</mat-label>
+              <input type="text" matInput [(ngModel)]="houseProfile.name">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" class="width-150">
+              <mat-label>Address</mat-label>
+              <input type="text"  matInput [(ngModel)]="houseProfile.address">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" class="width-150">
+              <mat-label>Description</mat-label>
+              <input type="text" matInput [(ngModel)]="houseProfile.description" >
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" class="width-150">
+              <mat-label>Rules</mat-label>
+              <input type="text" matInput [(ngModel)]="houseProfile.rules">
+            </mat-form-field>
+            <br>
+           
+            <mat-card-actions>
+              <button  mat-raised-button (click)="updateHouse()" color="primary">Update</button>
+            </mat-card-actions>
+            <br>
+            <br><br>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+    
+  </div>
+  
+</div>
+
+
+
 <h2 *ngIf="houseProfile.id == 0"> Your Houses: ({{houseProfiles.length}})</h2>
 <div *ngIf="houseProfile.id == 0">
+  <div class="input-group" style="float:right;">
 
-<div class="input-group" style="float:right;">
-<button  type="button" class="btn btn-outline-primary">ADD NEW</button>&nbsp;&nbsp;
-<div class="form-outline">
-    <input type="search" id="form1" class="form-control" [(ngModel)]="query"/>
-</div>&nbsp;&nbsp;
-<div>
-    <button type="button" (click)="searchHouses()" class="btn btn-primary">Search</button>&nbsp;
-    <button type="button" (click)="getAllHouses()" class="btn btn-secondary">Reset</button>
+    <button  type="button" class="btn btn-outline-primary" (click)="isCollapsed1 = !isCollapsed1"
+    [attr.aria-expanded]="!isCollapsed1" aria-controls="collapseExample">ADD NEW</button>&nbsp;&nbsp;
+
+    <div class="form-outline">
+        <input type="search" id="form1" class="form-control" [(ngModel)]="query"/>
+    </div>&nbsp;&nbsp;
+    <div>
+        <button type="button" (click)="searchHouses()" class="btn btn-primary">Search</button>&nbsp;
+        <button type="button" (click)="getAllHouses()" class="btn btn-secondary">Reset</button>
+    </div>
+  </div>
 </div>
-</div>
-</div>
-<br><br><br>
-<div class="container">
+
+
+<br>
+<div *ngIf="(houseProfile.id == 0) && isCollapsed1" id="collapseExample" >
+  
+  <div class="card">
+    <div class="card-body">
+      <div class="center">
+          <h3>Add new house: </h3>
+        </div>
+        <mat-grid-list cols="1" rowHeight="800px">
+          <mat-grid-tile>
+              <div class="example-container" >
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Name</mat-label>
+                  <input type="text" matInput [(ngModel)]="newHouse.name">
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Address</mat-label>
+                  <input type="text"  matInput [(ngModel)]="newHouse.address">
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Description</mat-label>
+                  <input type="text" matInput [(ngModel)]="newHouse.description" >
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill" class="width-200">
+                  <mat-label>Rules</mat-label>
+                  <input type="text" matInput [(ngModel)]="newHouse.rules">
+                </mat-form-field>
+                <br>
+               
+                <mat-card-actions>
+                  <button  mat-raised-button (click)="addNewHouse()" color="primary">ADD</button>
+                </mat-card-actions>
+                <br>
+                <br><br>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+  </div>
+</div> 
+
+
+<div *ngIf="houseProfile.id == 0" class="container">
     <div class="card-deck mb-3 text-center">
       <div class="card mb-4 shadow-sm" *ngFor="let house of houseProfiles">
         <div class="card-header">
@@ -28,7 +118,7 @@
           <ul class="list-unstyled mt-3 mb-4">
             <li>{{house.description}}</li>
           </ul>
-          <button type="button" (click)="openHouse()" class="btn btn-lg btn-block btn-outline-primary">Open</button>
+          <button type="button" (click)="openHouse(house)" class="btn btn-lg btn-block btn-outline-primary">Open</button>
         </div>
         <div>
           <button type="button" id="buttonCorner" (click)="removeHouse(house.id)" class="btn btn-danger">Delete</button>

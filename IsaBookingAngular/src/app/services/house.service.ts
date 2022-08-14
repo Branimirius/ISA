@@ -16,4 +16,12 @@ export class HouseService {
     public removeHouse(houseId: any): Observable<any>{
         return this.http.delete("http://localhost:8081/api/houses"+"/"+houseId);
     }
+
+    public addNewHouse(house: House): Observable<any>{
+        return this.http.post<any>("http://localhost:8081/api/houses", house);
+    }
+
+    public updateHouse(house: House): Observable<any>{
+        return this.http.put("http://localhost:8081/api/houses", house);
+    }
 }
