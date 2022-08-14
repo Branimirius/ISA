@@ -75,6 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(HttpMethod.POST, "/api/login");
         web.ignoring().antMatchers(HttpMethod.POST, "/api/users");
         web.ignoring().antMatchers(HttpMethod.POST, "/api/houses");
+        web.ignoring().antMatchers(HttpMethod.POST, "/api/boats");
         web.ignoring().antMatchers(HttpMethod.POST, "/api/mail");
         web.ignoring().antMatchers(HttpMethod.POST, "/api/availabilities");
         web.ignoring().antMatchers(HttpMethod.POST, "/api/v1/image-upload");
@@ -84,7 +85,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(HttpMethod.GET, "/api/loyality");
         web.ignoring().antMatchers(HttpMethod.GET, "/api/users");
         web.ignoring().antMatchers(HttpMethod.GET, "/api/houses");
+        web.ignoring().antMatchers(HttpMethod.GET, "/api/boats");
         web.ignoring().antMatchers(HttpMethod.GET, "/api/houses/{id}");
+        web.ignoring().antMatchers(HttpMethod.GET, "/api/boats/{id}");
         web.ignoring().antMatchers(HttpMethod.GET, "/api/fishing/classes");
         web.ignoring().antMatchers(HttpMethod.GET, "/api/fishingImages/fishingClassImages");
         web.ignoring().antMatchers(HttpMethod.GET, "/api/fishingImages/{fishingClassImages}");
@@ -95,9 +98,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(HttpMethod.PUT, "/api/users");
         web.ignoring().antMatchers(HttpMethod.PUT, "/api/users/{id}");
         web.ignoring().antMatchers(HttpMethod.PUT, "/api/houses");
+        web.ignoring().antMatchers(HttpMethod.PUT, "/api/boats");
         web.ignoring().antMatchers(HttpMethod.PUT, "/api/loyality");
         web.ignoring().antMatchers(HttpMethod.DELETE, "/api/users/{id}");
         web.ignoring().antMatchers(HttpMethod.DELETE, "/api/houses/{id}");
+        web.ignoring().antMatchers(HttpMethod.DELETE, "/api/boats/{id}");
         web.ignoring().antMatchers(HttpMethod.DELETE, "/api/fishing/classes/{id}");
         web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
     }
