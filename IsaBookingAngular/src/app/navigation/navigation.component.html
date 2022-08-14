@@ -21,13 +21,16 @@
                     <a class="nav-link" routerLink='/houseOwnerProfile'> House Owner</a>
                 </li>
                 <li *ngIf = "getUser()?.regType == 'BOAT_OWNER'" class="nav-item">
-                    <a class="nav-link" routerLink='/'> Boat Owner</a>
-                </li>&nbsp;
+                    <a class="nav-link" routerLink='/boatOwnerProfile'> Boat Owner</a>
+                </li>
                 <li *ngIf = "getUser()?.regType == 'ADMIN'" class="nav-item">
                     <a class="nav-link" routerLink='/adminProfile'> Profile </a>
                 </li>
                 <li *ngIf = "getUser()?.regType == 'HOUSE_OWNER'" class="nav-item">
-                    <a class="nav-link" routerLink='/houses'> Houses</a>
+                    <a class="nav-link" routerLink='/houses'>Houses</a>
+                </li>&nbsp;
+                <li *ngIf = "getUser()?.regType == 'BOAT_OWNER'" class="nav-item">
+                    <a class="nav-link" routerLink='/boats'>Boats</a>
                 </li>&nbsp;
             </ul>
             

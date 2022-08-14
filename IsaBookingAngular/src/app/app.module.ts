@@ -28,6 +28,8 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { HouseOwnerProfileComponent } from './house-owner-profile/house-owner-profile.component';
 import { HousesComponent } from './houses/houses.component';
+import { BoatOwnerProfileComponent } from './boat-owner-profile/boat-owner-profile.component';
+import { BoatsComponent } from './boats/boats.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { HousesComponent } from './houses/houses.component';
     AdminProfileComponent,
     InstructorCalendarComponent,
     HouseOwnerProfileComponent,
-    HousesComponent
+    HousesComponent,
+    BoatOwnerProfileComponent,
+    BoatsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,141 @@
+<app-navigation></app-navigation>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<mat-tab-group >
+  
+  <mat-tab class="tab-center" label="Settings"> 
+        <div class="container">
+            <div class="row flex-lg-nowrap">
+              <div class="col">
+                <div class="row">
+                  <div class="col mb-3">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="e-profile">
+                          <div class="row">
+                            <div class="col-12 col-sm-auto mb-3">
+                              <div class="mx-auto" style="width: 140px;">
+                                <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
+                                  <span style="color: rgb(166, 168, 170); font: bold 8pt Arial;">140x140</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                              <div class="text-center text-sm-left mb-2 mb-sm-0">
+                                <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{boatOwner.firstName}} {{boatOwner.lastName}}</h4>
+                                <p class="mb-0">{{boatOwner.eMail}}</p>
+                                <div class="text-muted"><small>{{boatOwner.adress}}</small></div>
+                                
+                              </div>
+                              <div class="text-center text-sm-right">
+                                <div class="text-muted"><small>Joined 09 Dec 2017</small></div>
+                                <input type="text" placeholder="Why?"/>&nbsp;
+                                <button type="button" [disabled]="boatOwner.deleteRequested" (click)="requestDelete()" class="btn btn-danger btn-sm">Delete your profile </button>
+                                <div *ngIf="boatOwner.deleteRequested" class="text-muted"><small>Profile deletion requested</small></div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div class="tab-content pt-3">
+                            <div class="tab-pane active">
+                              <form class="form" novalidate="" style="background:rgb(233, 236, 239)">
+                                <div class="row">
+                                  <div class="col">
+                                    <div class="row">
+                                      <div class="col">
+                                        <div class="form-group">
+                                          <label>Firstname</label>
+                                          <input class="form-control" [(ngModel)]="updateBoatOwner.firstName" type="text" name="firstName"  >
+                                        </div>
+                                      </div>
+                                      <div class="col">
+                                        <div class="form-group">
+                                          <label>Lastname</label>
+                                          <input class="form-control" [(ngModel)]="updateBoatOwner.lastName" type="text" name="lastName"  >
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col">
+                                        <div class="form-group">
+                                          <label>Email</label>
+                                          <input class="form-control" [(ngModel)]="updateBoatOwner.eMail" type="text" name="eMail">
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col mb-3">
+                                        <div class="form-group">
+                                          <label>City</label>
+                                          <input class="form-control" [(ngModel)]="updateBoatOwner.city" type="text" name="city">
+                                        </div>
+                                      </div>
+                                      <div class="col mb-3">
+                                        <div class="form-group">
+                                          <label>Country</label>
+                                          <input class="form-control" [(ngModel)]="updateBoatOwner.country" type="text" name="country">
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col mb-3">
+                                        <div class="form-group">
+                                          <label>Address</label>
+                                          <input class="form-control" [(ngModel)]="updateBoatOwner.adress" type="text" name="adress">
+                                        </div>
+                                      </div>
+                                      <div class="col mb-3">
+                                        <div class="form-group">
+                                          <label>Phone number</label>
+                                          <input class="form-control" [(ngModel)]="updateBoatOwner.phone" type="text" name="phoneNumber">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-12 col-sm-6 mb-3">
+                                    <div class="mb-2"><b>Change Password</b></div>
+                                    <div class="row">
+                                      <div class="col">
+                                        <div class="form-group">
+                                          <label>Current Password</label>
+                                          <input class="form-control" [(ngModel)]="currPass" type="password"  placeholder="••••••" name="currPass">
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col">
+                                        <div class="form-group">
+                                          <label>New Password</label>
+                                          <input class="form-control" [(ngModel)]="newPass" type="password"  placeholder="••••••" type="password" name="newPass">
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col">
+                                        <div class="form-group">
+                                          <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
+                                          <input class="form-control" [(ngModel)]="confPass" type="password"  placeholder="••••••" name="confPass"></div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                                </div>
+                                <div class="row">
+                                  <div class="col d-flex justify-content-end">
+                                    <button class="btn btn-primary"  (click)="updateBoatOwnerProfile()" type="submit">Save Changes</button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>    
+              </div>
+            </div>
+          </div>
+    </mat-tab>

@@ -9,7 +9,8 @@ import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { InstructorCalendarComponent }from './instructor-calendar/instructor-calendar.component';
 import { HouseOwnerProfileComponent } from './house-owner-profile/house-owner-profile.component';
 import { HousesComponent } from './houses/houses.component';
-
+import { BoatOwnerProfileComponent } from './boat-owner-profile/boat-owner-profile.component';
+import { BoatsComponent } from './boats/boats.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,8 @@ const routes: Routes = [
   { path: 'adminProfile', component: AdminProfileComponent},
   { path: 'houseOwnerProfile', component: HouseOwnerProfileComponent},
   { path: 'houses', component: HousesComponent },
+  { path: 'boatOwnerProfile', component: BoatOwnerProfileComponent},
+  { path: 'boats', component: BoatsComponent },
 
   { path: '', redirectTo: 'landingPage', pathMatch: 'full' },
   { path: '**', redirectTo: 'landingPage', pathMatch: 'full' },

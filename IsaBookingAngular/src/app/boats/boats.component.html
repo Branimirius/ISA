@@ -1,0 +1,20 @@
+<app-navigation></app-navigation>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<h2 > Your Boats: ({{boatProfiles.length}})</h2>
+<div >
+  <div class="input-group" style="float:right;">
+
+    <button  type="button" class="btn btn-outline-primary" (click)="isCollapsed1 = !isCollapsed1"
+    [attr.aria-expanded]="!isCollapsed1" aria-controls="collapseExample">ADD NEW</button>&nbsp;&nbsp;
+
+    <div class="form-outline">
+        <input type="search" id="form1" class="form-control" [(ngModel)]="query"/>
+    </div>&nbsp;&nbsp;
+    <div>
+        <button type="button" (click)="searchBoats()" class="btn btn-primary">Search</button>&nbsp;
+        <button type="button" (click)="getAllBoats()" class="btn btn-secondary">Reset</button>
+    </div>
+  </div>
+</div>
