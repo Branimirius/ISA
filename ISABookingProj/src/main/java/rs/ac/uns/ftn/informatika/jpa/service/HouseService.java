@@ -27,12 +27,9 @@ public class HouseService {
         }
         return houseDTO;
     }
-    public HouseDTO save(HouseDTO houseDTO) {
+    public House save(House house) {
 
-        House house = new House(houseDTO);
-        houseRepository.save(house);
-
-        return new HouseDTO(house);
+        return houseRepository.save(house);
     }
 
     public boolean remove(Long id) {

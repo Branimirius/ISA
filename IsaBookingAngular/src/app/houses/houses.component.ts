@@ -75,6 +75,7 @@ export class HousesComponent implements OnInit {
   removeHouse(house: number){
     this.houseService.removeHouse(house).subscribe((data:any) => {
       if(data.deleted == true){
+        alert("House deleted.");
         this.houseProfiles.filter(el => el.id != house);
         this.getAllHouses();
       }else{
@@ -86,6 +87,7 @@ export class HousesComponent implements OnInit {
   addNewHouse(){
     this.newHouse.userId = this.authenticationService.currentUserValue.id;
     this.houseService.addNewHouse(this.newHouse).subscribe((data: any)=>{
+      alert("Successfuly added.");  
       this.getAllHouses();
     });
 

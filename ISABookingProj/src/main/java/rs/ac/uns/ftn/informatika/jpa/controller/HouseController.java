@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import rs.ac.uns.ftn.informatika.jpa.dto.FishingClassDTO;
 import rs.ac.uns.ftn.informatika.jpa.dto.HouseDTO;
 import rs.ac.uns.ftn.informatika.jpa.model.House;
 import rs.ac.uns.ftn.informatika.jpa.service.HouseService;
+
+import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
+
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -39,27 +41,35 @@ public class HouseController {
     @PostMapping(consumes = "application/json")
     public ResponseEntity<Object> saveHouse(@RequestBody HouseDTO houseDTO){
 
-        HouseDTO house = houseService.save(houseDTO);
+        House house = new House();
+        house.setUserId(houseDTO.userId);
+        house.setName(houseDTO.name);
+        house.setAddress(houseDTO.address);
+        house.setDescription(houseDTO.description);
+        house.setRules(houseDTO.rules);
+        house = houseService.save(house);
 
-        return new ResponseEntity<>(house, HttpStatus.CREATED);
+        return new ResponseEntity<>(new HouseDTO(house), HttpStatus.CREATED);
     }
 
     @PutMapping(consumes = "application/json")
     public ResponseEntity<Object> updateHouse(@RequestBody HouseDTO houseDTO) {
-        boolean status = houseService.updateHouse(houseDTO);
-        if(status)
-            return new ResponseEntity<>("House successfully updated!", HttpStatus.OK);
-        else
-            return new ResponseEntity<>("There was an error while updating!", HttpStatus.BAD_REQUEST);
+        House house = houseService.findOne(houseDTO.id);
+        house.setName(houseDTO.name);
+        house.setAddress(houseDTO.address);
+        house.setDescription(houseDTO.description);
+        house.setRules(houseDTO.rules);
+        house = houseService.save(house);
+        return new ResponseEntity<>(new HouseDTO(house), HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> removeHouse(@PathVariable long id) {
-        boolean status = houseService.remove(id);
-        if (status)
-            return new ResponseEntity<>("House successfully deleted!", HttpStatus.OK);
-        else
-            return new ResponseEntity<>("House not found!", HttpStatus.NOT_FOUND);
+    public Map<String, Boolean> removeHouse(@PathVariable long id) {
+        this.houseService.remove(id);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+
+        return response;
     }
 
 }
