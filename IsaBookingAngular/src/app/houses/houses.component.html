@@ -4,7 +4,7 @@
 <div *ngIf="!(houseProfile.id == 0)">
   <button type="button" (click)="closeHouse()" class="btn btn-lg btn-block btn-outline-primary">Back</button>
   <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <mat-grid-list cols="1" rowHeight="400px">
+    <mat-grid-list cols="1" rowHeight="800px">
       <mat-grid-tile>
           <div class="example-container" >
             <mat-form-field appearance="fill" class="width-150">
@@ -23,10 +23,21 @@
             </mat-form-field>
             <br>
             <mat-form-field appearance="fill" class="width-150">
+              <mat-label>Room</mat-label>
+              <input type="text" matInput [(ngModel)]="houseProfile.room">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" class="width-150">
+              <mat-label>Beds</mat-label>
+              <input type="text" matInput [(ngModel)]="houseProfile.beds">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill" class="width-150">
               <mat-label>Rules</mat-label>
               <input type="text" matInput [(ngModel)]="houseProfile.rules">
             </mat-form-field>
             <br>
+          
            
             <mat-card-actions>
               <button  mat-raised-button (click)="updateHouse()" color="primary">Update</button>

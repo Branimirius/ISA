@@ -46,6 +46,8 @@ public class HouseController {
         house.setName(houseDTO.name);
         house.setAddress(houseDTO.address);
         house.setDescription(houseDTO.description);
+        house.setRoom(houseDTO.room);
+        house.setBeds(houseDTO.beds);
         house.setRules(houseDTO.rules);
         house = houseService.save(house);
 
@@ -58,8 +60,10 @@ public class HouseController {
         house.setName(houseDTO.name);
         house.setAddress(houseDTO.address);
         house.setDescription(houseDTO.description);
+        house.setBeds(houseDTO.beds);
         house.setRules(houseDTO.rules);
-        house = houseService.save(house);
+        house.setRules(houseDTO.rules);
+
         return new ResponseEntity<>(new HouseDTO(house), HttpStatus.CREATED);
     }
 

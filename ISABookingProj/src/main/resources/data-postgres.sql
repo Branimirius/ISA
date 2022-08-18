@@ -24,5 +24,10 @@ insert into grades(user_id, subject_id, grade) values (6, 1, 3);
 
 insert into loyality_program(client_points, owner_points, bronze_line, silver_line, gold_line) values (1, 2, 4, 8, 12);
 
-insert into houses (name, address, description, rules, user_id) values ('Villa Sofia', 'Vrdnicka 3', 'Blizu grada!', 'Zabranjeno pusenje!', 4);
-insert into houses (name, address, description, rules, user_id) values ('Villa Jovana', 'Vrdnicka 16', 'Povoljno!', 'Zabranjeno pusenje!', 5);
+insert into houses (name, address, description, rules, room, beds, user_id) values ('Villa Sofia', 'Vrdnicka 3', 'Blizu grada!', 'Zabranjeno pusenje!', '304', 2, 4);
+insert into houses (name, address, description, rules, room, beds, user_id) values ('Villa Jovana', 'Vrdnicka 16', 'Povoljno!', 'Zabranjeno pusenje!', '101', 1, 5);
+
+insert into pricelist (price) values ('50');
+insert into additional_service (name, pricelist_id) values ('pool', 1);
+insert into additional_service_house (additional_service_id, house_id) values (1, 1);
+insert into houses_additional_service (houses_id, additional_service_id) values (1, 1);
